@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import HeaderComponet from './header';
+import Header from './Header';
 export default class Layout extends Component {
   render() {
-    if(EASY_ENV_IS_NODE) {
+    if (EASY_ENV_IS_NODE) {
       return <html>
         <head>
           <title>{this.props.title}</title>
@@ -12,7 +12,12 @@ export default class Layout extends Component {
           <meta name="description" content={this.props.description}></meta>
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
         </head>
-        <body><HeaderComponet></HeaderComponet><div id="app">{this.props.children}</div></body>
+        <body>
+          <Header></Header>
+          <div id="app">
+            {this.props.children}
+          </div>
+        </body>
       </html>;
     }
     return <div id="app">{this.props.children}</div>;

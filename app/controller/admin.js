@@ -1,3 +1,5 @@
+
+
 module.exports = app => {
   return class AdminController extends app.Controller {
     async login() {
@@ -6,6 +8,8 @@ module.exports = app => {
     }
     async index() {
       const { ctx } = this;
+      const result = await ctx.service.user.fetch('/user');
+      console.log('result', result);
       const list = [{
         id: 0,
         title: 'Egg + React 服务端渲染骨架',

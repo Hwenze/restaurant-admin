@@ -27,5 +27,15 @@ module.exports = app => {
     layout: path.join(app.baseDir, 'app/web/view/layout.html')
   };
 
+
+  // 服务端口号
+  exports.cluster = {
+    listen: {
+      path: '',
+      port: 8081,
+      hostname: 'localhost',
+    }
+  };
+
   return exports;
 };

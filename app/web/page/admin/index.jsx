@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { create } from './store';
-import Route from './router';
+import { Provider } from 'mobx-react';
+import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
+import Store from '~web/store';
+import Header from '~web/component/Header';
+import Sidebar from '~web/component/Sidebar';
+import routerList from './router.js';
+import { Layout } from 'antd';
 
-import './index.css';
+const { Sider, Content } = Layout;
+
+import './index.less';
 
 export default class Admin extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       collapsed: false,
     };
   }
-  
+
 
   // toggle = () => {
   //   this.setState({
@@ -23,12 +28,34 @@ export default class Admin extends Component {
   // }
 
   render() {
-    const store = create(window.__INITIAL_STATE__);
-    const url = store.getState().url;
     return (
-      <Provider store={ store }>
+      <Provider store={Store && new Store()}>
         <BrowserRouter>
-          <Route url={ url }/>
+          <Layout className="admin-root">
+            <Header />
+            <Layout className="admin-main">
+              <Sider className="admin-sidebar">
+                <Sidebar />
+              </Sider>
+              <Content className="admin-content">
+                <Switch>
+                  {routerList.map((item, index) => {
+                    if (item.redirect) {
+                      return <Redirect key={index} to={item.redirect} />
+                    }
+                    return (
+                      <Route key={index}
+                        path={item.path}
+                        exact={item.exact}
+                        strict={item.strict}
+                        component={item.component}
+                      ></Route>
+                    )
+                  })}
+                </Switch>
+              </Content>
+            </Layout>
+          </Layout>
         </BrowserRouter>
       </Provider>
     );
