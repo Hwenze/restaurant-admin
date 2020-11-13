@@ -6,7 +6,7 @@ const { Header } = Layout;
 
 class commonHeader extends React.Component {
   constructor () {
-    super()
+    super();
   }
 
   handleLogOut = () => {
