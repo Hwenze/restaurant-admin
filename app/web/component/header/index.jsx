@@ -1,23 +1,24 @@
 import React from 'react'
 import { Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
+import './index.less';
 
 const { Header } = Layout;
 
 class commonHeader extends React.Component {
-  constructor () {
+  constructor() {
     super()
   }
 
   handleLogOut = () => {
-    const {logout} = this.props
+    const { logout } = this.props
     logout().payload.promise.then(() => {
       this.props.history.replace('/login');
     });
   }
 
-  render () {
-    const {profile = {}} = this.props;
+  render() {
+    const { profile = {} } = this.props;
     let username = profile.user ? profile.user.name : '测试用户';
     const menu = (
       <Menu>
@@ -44,30 +45,32 @@ class commonHeader extends React.Component {
     );
 
     return (
-      <Header className="admin-header" style={{ background: '#24292e', padding: 0 }}>
-        <Row type="flex" justify="end" align="middle">
-          <Col span={3}>
-            <Badge className="header-icon" count={5}>
-              <Link to="/mailbox">
-                <Icon type="mail" />
-              </Link>
-            </Badge>
-            <Popover content={content} title="Title" trigger="click">
-              <Badge className="header-icon" dot>
-                <a href="#">
-                  <Icon type="notification" />
-                </a>
-              </Badge>
-            </Popover>
-          </Col>
-          <Col span={3}>
-            <Dropdown overlay={menu}>
-              <a className="ant-dropdown-link" href="#">
-                <Avatar style={{ verticalAlign: 'middle'}}>{username}</Avatar> <Icon type="down" />
+      <Header className="admin-header" >
+        <div className="sider-trigger">
+          <Icon
+            className="trigger"
+            type='menu-unfold'
+          />
+        </div>
+        <div className="header-right">
+          <Badge className="header-icon" count={5}>
+            <Link to="/mailbox">
+              <Icon type="mail" />
+            </Link>
+          </Badge>
+          <Popover content={content} title="Title" trigger="click">
+            <Badge className="header-icon" dot>
+              <a href="#">
+                <Icon type="notification" />
               </a>
-            </Dropdown>
-          </Col>
-        </Row>
+            </Badge>
+          </Popover>
+          <Dropdown overlay={menu}>
+            <a className="ant-dropdown-link" href="#">
+              <Avatar style={{ verticalAlign: 'middle' }}>{username}</Avatar> <Icon type="down" />
+            </a>
+          </Dropdown>
+        </div>
       </Header>
     )
   }

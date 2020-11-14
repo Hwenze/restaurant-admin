@@ -17,8 +17,9 @@
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "antd": "^3.0.3",
     "axios": "^0.21.0",
+    "css-loader": "^5.0.1",
     "egg": "^2.1.0",
-    "egg-cors": "^2.0.0",
+    "egg-cors": "^2.2.3",
     "egg-logger": "^1.5.0",
     "egg-scripts": "^2.8.1",
     "egg-validate": "^1.0.0",
@@ -31,12 +32,14 @@
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.17.1",
     "qs": "^6.9.4",
+    "querystring": "^0.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-loadable": "^5.5.0",
     "react-router": "^5.1.2",
     "react-router-config": "^5.1.1",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "style-loader": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -60,8 +63,8 @@
     "eslint-plugin-react": "^7.1.0",
     "imagemin-webpack-plugin": "^2.3.0",
     "ip": "^1.1.5",
-    "less-loader":"^4.0.5",
-    "less":"^2.7.2"
+    "less-loader": "^4.0.5",
+    "less": "^2.7.2"
   },
   "engines": {
     "node": ">=8.0.0"

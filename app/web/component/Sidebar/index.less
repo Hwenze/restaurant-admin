@@ -1,0 +1,50 @@
+@import '../../libs/css/variable.less';
+
+
+.admin-sidebar {
+  background: @sideColor;
+
+  .sidebar {
+    background: @sideColor;
+    height: 100%;
+    border-right:0;
+
+    .ant-menu {
+      background: @sideColor;
+    }
+
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      height: 50px;
+      line-height: 50px;
+      margin: 0;
+      color: @sideTextColor;
+
+      a {
+        color: @sideTextColor;
+      }
+    }
+
+    .ant-menu-item-active {
+      background: @hoverColor;
+    }
+
+    .ant-menu-item-selected {
+      background: @activeColor;
+      color: @activeTextColor;
+
+      .ant-menu-item,
+      a {
+        color: @activeTextColor;
+      }
+    }
+
+    .ant-menu-submenu-selected {
+      .ant-menu-sub {
+        background: @activeColor;
+
+      }
+    }
+
+  }
+}

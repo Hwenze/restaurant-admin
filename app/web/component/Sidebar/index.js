@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter, matchPath } from 'react-router'
 import { Layout, Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
-
+import './index.less';
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const { Sider } = Layout;
@@ -109,7 +109,7 @@ class Sidebar extends React.Component {
           mode="inline"
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
-          style={{ height: '100%', borderRight: 0 }}
+          className="sidebar"
         >
           <SubMenu key="sub1" title="subnav 1">
             <MenuItem key="1">
@@ -120,13 +120,6 @@ class Sidebar extends React.Component {
             </MenuItem>
           </SubMenu>
         </Menu>
-        <div className="sider-trigger">
-          <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            />
-        </div>
       </Sider>
     )
   }

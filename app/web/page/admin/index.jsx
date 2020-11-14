@@ -32,27 +32,29 @@ export default class Admin extends Component {
       <Provider store={Store && new Store()}>
         <BrowserRouter>
           <Layout className="admin-root">
-            <Header />
             <Layout className="admin-main">
               <Sider className="admin-sidebar">
                 <Sidebar />
               </Sider>
               <Content className="admin-content">
-                <Switch>
-                  {routerList.map((item, index) => {
-                    if (item.redirect) {
-                      return <Redirect key={index} to={item.redirect} />
-                    }
-                    return (
-                      <Route key={index}
-                        path={item.path}
-                        exact={item.exact}
-                        strict={item.strict}
-                        component={item.component}
-                      ></Route>
-                    )
-                  })}
-                </Switch>
+                <Header />
+                <div className='admin-container'>
+                  <Switch>
+                    {routerList.map((item, index) => {
+                      if (item.redirect) {
+                        return <Redirect key={index} to={item.redirect} />
+                      }
+                      return (
+                        <Route key={index}
+                          path={item.path}
+                          exact={item.exact}
+                          strict={item.strict}
+                          component={item.component}
+                        ></Route>
+                      )
+                    })}
+                  </Switch>
+                </div>
               </Content>
             </Layout>
           </Layout>

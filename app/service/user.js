@@ -4,13 +4,14 @@ const axios = require('axios');
 
 module.exports = app => {
     return class UserService extends app.Service {
-        async fetch(api, option = {}) {
+        async fetch(method, api, data) {
 
             const request = axios.create({
-                baseURL: 'http://127.0.0.1:8080',
+                baseURL: 'http://localhost:8080',
                 // baseURL: 'http://172.18.3.51:3000',
                 // baseURL: 'http://project.fhk255.cn',
-                withCredentials: true
+                withCredentials: true,
+                credentials: 'include'
             });
             // 发送请求
             request.interceptors.request.use(
@@ -24,6 +25,7 @@ module.exports = app => {
                     //     // 解析请求的json
                     //     config.data = qs.stringify(config.data);
                     // }
+                    config.credentials = 'include';
                     return config;
                 },
                 error => {
@@ -54,12 +56,24 @@ module.exports = app => {
                     return error;
                 }
             )
+
+            let config = {
+                url: api,
+                method: method,
+            }
+            const a = request(config);
+            console.log('aaa',a);
             const result = await new Promise((resolve, reject) => {
-                request({
+                let config = {
                     url: api,
-                    ...option,
-                    method: option.method ? option.method : 'get'
-                }).then(res => {
+                    method: method,
+                }
+                if (method === 'get') {
+                    config.params = data;
+                } else {
+                    config.data = data;
+                }
+                return request(config).then(res => {
                     resolve(res.data);
                 }).catch(err => {
                     reject(err);
