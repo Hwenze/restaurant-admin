@@ -1,17 +1,22 @@
 @import '../../libs/css/variable.less';
 
 
-.admin-sidebar {
+#app .admin-sidebar {
   background: @sideColor;
 
   .sidebar {
     background: @sideColor;
     height: 100%;
-    border-right:0;
+    border-right: 0;
 
-    .ant-menu {
-      background: @sideColor;
+    .ant-menu-inline.ant-menu-sub {
+      background: @activeColor;
+      box-shadow: none;
     }
+
+    // .ant-menu {
+    //   background: @sideColor;
+    // }
 
     .ant-menu-item,
     .ant-menu-submenu-title {
@@ -42,7 +47,7 @@
     .ant-menu-submenu-selected {
       .ant-menu-sub {
         background: @activeColor;
-
+        box-shadow: none;
       }
     }
 

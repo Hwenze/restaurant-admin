@@ -7,12 +7,17 @@ module.exports = app => {
       const result = await ctx.service.user.fetch('post', '/login', { username, password });
       if (result && result.code === 200 && result.data && result.data.userinfo) {
         ctx.session.userinfo = result.data.userinfo;
-        ctx.session.menuList = result.data.menuList;
+        ctx.session.menuList = result.data.menuList.map(item => {
+          return item.router_path
+        });
         ctx.cookies.set('x-uid', result.data.userinfo.username);
         ctx.body = {
           code: 200,
           msg: result.msg,
-          data: result.data.userinfo.token
+          data: {
+            token: result.data.userinfo.token,
+            menuList: result.data.menuList
+          }
         };
       } else {
         ctx.body = {

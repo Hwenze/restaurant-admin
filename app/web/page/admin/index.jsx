@@ -5,7 +5,10 @@ import Store from '~web/store';
 import Header from '~web/component/Header';
 import Sidebar from '~web/component/Sidebar';
 import routerList from './router.js';
+import Root from './root.js';
 import { Layout } from 'antd';
+import Storage from '~web/utils/storage';
+import { TOKEN_KEY } from '~web/utils/constant';
 
 const { Sider, Content } = Layout;
 
@@ -21,6 +24,13 @@ export default class Admin extends Component {
   }
 
 
+  componentDidMount() {
+    const { userinfo = {}, token = null, menuList = [] } = this.props;
+    console.log(token);
+    Storage.setItem({ name: TOKEN_KEY, value: token });
+  }
+
+
   // toggle = () => {
   //   this.setState({
   //     collapsed: !this.state.collapsed,
@@ -32,31 +42,7 @@ export default class Admin extends Component {
       <Provider store={Store && new Store()}>
         <BrowserRouter>
           <Layout className="admin-root">
-            <Layout className="admin-main">
-              <Sider className="admin-sidebar">
-                <Sidebar />
-              </Sider>
-              <Content className="admin-content">
-                <Header />
-                <div className='admin-container'>
-                  <Switch>
-                    {routerList.map((item, index) => {
-                      if (item.redirect) {
-                        return <Redirect key={index} to={item.redirect} />
-                      }
-                      return (
-                        <Route key={index}
-                          path={item.path}
-                          exact={item.exact}
-                          strict={item.strict}
-                          component={item.component}
-                        ></Route>
-                      )
-                    })}
-                  </Switch>
-                </div>
-              </Content>
-            </Layout>
+            <Root {...this.props} />
           </Layout>
         </BrowserRouter>
       </Provider>

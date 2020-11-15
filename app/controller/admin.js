@@ -13,16 +13,26 @@ module.exports = app => {
     }
     async index() {
       const { ctx } = this;
-      const { userinfo = {} } = ctx.session;
-      const path = ctx.request.path;
-      // if (!userinfo || !userinfo.token) {
-      //   await ctx.redirect('/login');
-      //   return;
-      // }
+      const { userinfo = {}, menuList = [] } = ctx.session;
+      const { token = null } = userinfo;
+      if (!userinfo || !userinfo.token) {
+        await ctx.redirect('/login');
+        return;
+      }
       await ctx.renderClient('admin.js', {
-        menuList: ctx.session.menuList,
-        userinfo: ctx.session.userinfo
+        menuList: menuList,
+        userinfo: userinfo,
+        token: token
       });
+    }
+
+    async logout() {
+      const { ctx } = this;
+
+      ctx.session = null;
+      ctx.cookies.set('x-uid.sig', null);
+      ctx.cookies.set('x-uid', null);
+      await ctx.redirect('/login');
     }
   };
 };
