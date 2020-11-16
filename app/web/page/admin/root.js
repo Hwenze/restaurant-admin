@@ -6,6 +6,7 @@ import routerList from './router.js';
 import BaseComponent from '~web/layout/base';
 import { observer, inject } from 'mobx-react';
 import { Layout } from 'antd';
+import NotFound from '~web/page/admin/notFound';
 import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
 
 const { Sider, Content } = Layout;
@@ -26,6 +27,7 @@ export default class Root extends Component {
 
   render() {
     const { store: { commonStore }, menuList = [] } = this.props;
+    console.log('menuList', this.props);
     return (
       <Layout className="admin-main">
         <Sider className="admin-sidebar">
@@ -36,15 +38,14 @@ export default class Root extends Component {
           <div className='admin-container'>
             <Switch>
               {routerList.map((item, index) => {
-                if(menuList.findIndex(menu=>{
-                  return (item.path.indexOf(menu) === -1)
-                })){
-                  return <Route key={index}
-                    path="/404"
-                    exact={true}
-                    strict={true}
-                  ></Route>
+                if(Array.isArray(item.path)){
+                  if(item.path.findIndex(it=>{
+                    return menuList.includes(it);
+                  }) === -1){
+                    return null;
+                  }
                 }
+                // else {
                 if (item.redirect) {
                   return <Redirect key={index} to={item.redirect} />
                 }
@@ -56,6 +57,7 @@ export default class Root extends Component {
                     component={item.component}
                   ></Route>
                 )
+                // }
               })}
             </Switch>
           </div>

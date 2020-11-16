@@ -26,7 +26,6 @@ export default class Admin extends Component {
 
   componentDidMount() {
     const { userinfo = {}, token = null, menuList = [] } = this.props;
-    console.log(token);
     Storage.setItem({ name: TOKEN_KEY, value: token });
   }
 
@@ -38,11 +37,14 @@ export default class Admin extends Component {
   // }
 
   render() {
+    const { menuList, baseRoutes } = this.props;
+    const { passRoute = [] } = this.state;
+    console.log('passRoute',passRoute);
     return (
       <Provider store={Store && new Store()}>
         <BrowserRouter>
           <Layout className="admin-root">
-            <Root {...this.props} />
+            <Root menuList={menuList} />
           </Layout>
         </BrowserRouter>
       </Provider>

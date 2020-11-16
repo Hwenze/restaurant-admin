@@ -20,7 +20,7 @@ module.exports = app => {
         return;
       }
       await ctx.renderClient('admin.js', {
-        menuList: menuList,
+        menuList: menuList.concat(ctx.app.config.baseRoutes||[]),
         userinfo: userinfo,
         token: token
       });

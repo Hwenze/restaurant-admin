@@ -25,5 +25,6 @@ export default class Common{
     @action setMenulist(menuList){
         this.state.menuList = menuList;
     }
+    
 
 }
