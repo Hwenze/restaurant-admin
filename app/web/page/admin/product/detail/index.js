@@ -102,7 +102,7 @@ export default class UserList extends BaseComponent {
             </Col>
             <Col {...COL_CONFIG} offset={18}>
               <Form.Item className="df ai-c jc-fe">
-                <Button htmltype="submit" type="primary">搜索</Button>
+                <Button htmlType="submit" type="primary">搜索</Button>
                 <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
               </Form.Item>
             </Col>

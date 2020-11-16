@@ -72,8 +72,17 @@ export default class UserList extends BaseComponent {
 
 
     return (
-      <Card bordered={false}>
-        <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
+      <Card bordered={false} title="会员">
+        <Form className="body-form df-form"
+          ref={this.formRef}
+          onFinish={this.onFinish}
+          initialValues={{
+            q_username: queryForm.q_username || "",
+            q_nickname: queryForm.q_nickname || "",
+            q_status: queryForm.q_status || "",
+            q_role: queryForm.q_role || ""
+          }}
+        >
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_username" label="用户名" >
@@ -103,7 +112,7 @@ export default class UserList extends BaseComponent {
             </Col>
             <Col {...COL_CONFIG} offset={18}>
               <Form.Item className="df ai-c jc-fe">
-                <Button htmltype="submit" type="primary">搜索</Button>
+                <Button htmlType="submit" type="primary">搜索</Button>
                 <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
               </Form.Item>
             </Col>

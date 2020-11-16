@@ -15,7 +15,8 @@ export default class UserList extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-      queryForm: {}
+      queryForm: {},
+      formLoad:false,
     }
   }
 
@@ -29,7 +30,8 @@ export default class UserList extends BaseComponent {
     // 获取基本信息
     const { store: { userStore } } = this.props;
     this.setState({
-      queryForm: params
+      queryForm: params,
+      formLoad:true,
     })
     userStore.getUserList(params).then(res => {
       console.log('res', res);
@@ -37,7 +39,7 @@ export default class UserList extends BaseComponent {
 
   }
   // 确认
-  onFinish = (value) => {
+  onFinish = value => {
     this.pushUrlQuery({
       ...value,
       current: 1,
@@ -49,12 +51,12 @@ export default class UserList extends BaseComponent {
   }
 
   render() {
-    const { store: { userStore }, form } = this.props;
-    const { queryForm } = this.state;
+    const { store: { userStore } } = this.props;
+    const { queryForm,formLoad } = this.state;
     const { userList = [], pagination = {} } = userStore.state;
     const columns = [
       {
-        title: 'ID',
+        title: '运营账号',
         dataIndex: 'uid',
         align: 'center',
       },
@@ -71,8 +73,17 @@ export default class UserList extends BaseComponent {
 
 
     return (
-      <Card bordered={false}>
-        <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
+      <Card bordered={false} title="运营">
+        {formLoad && <Form className="body-form df-form"
+          ref={this.formRef}
+          onFinish={this.onFinish}
+          initialValues={{
+            q_username: queryForm.q_username,
+            q_nickname: queryForm.q_nickname,
+            q_status: queryForm.q_status ,
+            q_role: queryForm.q_role
+          }}
+        >
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_username" label="用户名" >
@@ -100,14 +111,14 @@ export default class UserList extends BaseComponent {
                 ]}/>
               </Form.Item>
             </Col>
-            <Col {...COL_CONFIG} offset={18}>
+            <Col {...COL_CONFIG} offset={18}> 
               <Form.Item className="df ai-c jc-fe">
-                <Button htmltype="submit" type="primary">搜索</Button>
+                <Button htmlType="submit" type="primary">搜索</Button>
                 <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
               </Form.Item>
             </Col>
           </Row>
-        </Form>
+        </Form>}
         <Table
           className="body-table"
           bordered

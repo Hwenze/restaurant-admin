@@ -58,7 +58,9 @@ export function showPagination(pagination) {
 export function gerUrlQuery(location = window.loaction) {
     let args = {};
     try {
-        args = queryString.parse(location.search);
+        let search = location.search;
+        search = search.startsWith('?') ? search.substr(1) : search;
+        args = queryString.parse(search);
     } catch (err) {
         console.log(err);
     }

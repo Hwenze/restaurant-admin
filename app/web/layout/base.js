@@ -30,14 +30,15 @@ export default class BaseComponent extends Component {
   // 将对象参数push到路由
   pushUrlQuery(params) {
     params = params || {};
-    const { history, loacation: { pathname, query } } = this.props;
+    console.log('params', this.props);
+    const { history, location: { pathname, query } } = this.props;
     const newQuery = {};
-
-    Object.keys(query).forEach(key => {
-      if (!params.hasOwnProperty(key) && !key.startsWith('f_')) {
-        params[key] = query[key];
-      }
-    })
+    
+    // Object.keys(query).forEach(key => {
+    //   if (!params.hasOwnProperty(key) && !key.startsWith('q_')) {
+    //     params[key] = query[key];
+    //   }
+    // })
 
     Object.keys(params).forEach(key => {
       if (typeof (params[key]) !== 'undefined') {
@@ -45,8 +46,9 @@ export default class BaseComponent extends Component {
       }
     })
 
-    const search = Object.keys(newQuery).length === 0 ? '' : `?${queryString.stringify(newQuery)}`;
+    console.log(newQuery);
 
+    const search = Object.keys(newQuery).length === 0 ? '' : `?${queryString.stringify(newQuery)}`;
     history.replace({ pathname, search });
     this.loadData(params);
   }

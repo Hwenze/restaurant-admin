@@ -6,14 +6,13 @@ import routerList from './router.js';
 import BaseComponent from '~web/layout/base';
 import { observer, inject } from 'mobx-react';
 import { Layout } from 'antd';
-import NotFound from '~web/page/admin/notFound';
 import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
-
 const { Sider, Content } = Layout;
+import { withRouter } from 'react-router-dom';
 
 @inject(('store'))
 @observer
-export default class Root extends Component {
+class Root extends BaseComponent {
 
 
   componentDidMount() {
@@ -27,7 +26,6 @@ export default class Root extends Component {
 
   render() {
     const { store: { commonStore }, menuList = [] } = this.props;
-    console.log('menuList', this.props);
     return (
       <Layout className="admin-main">
         <Sider className="admin-sidebar">
@@ -37,28 +35,26 @@ export default class Root extends Component {
           <Header />
           <div className='admin-container'>
             <Switch>
-              {routerList.map((item, index) => {
-                if(Array.isArray(item.path)){
-                  if(item.path.findIndex(it=>{
-                    return menuList.includes(it);
-                  }) === -1){
-                    return null;
+              {menuList.map((item, index) => {
+                if (routerList[item]) {
+                  const CURRENT_ROUTER = routerList[item];
+                  if (CURRENT_ROUTER.redirect) {
+                    <Redirect key={index} to={CURRENT_ROUTER.redirect} />
                   }
-                }
-                // else {
-                if (item.redirect) {
-                  return <Redirect key={index} to={item.redirect} />
-                }
-                return (
-                  <Route key={index}
-                    path={item.path}
-                    exact={item.exact}
-                    strict={item.strict}
-                    component={item.component}
+                  return <Route key={index}
+                    path={CURRENT_ROUTER.path}
+                    exact={CURRENT_ROUTER.exact}
+                    strict={CURRENT_ROUTER.strict}
+                    component={CURRENT_ROUTER.component}
                   ></Route>
-                )
-                // }
+                }
               })}
+              <Route key='/404'
+                path={routerList['/404'].path}
+                exact={routerList['/404'].exact}
+                strict={routerList['/404'].strict}
+                component={routerList['/404'].component}
+              ></Route>
             </Switch>
           </div>
         </Content>
@@ -66,3 +62,6 @@ export default class Root extends Component {
     )
   }
 }
+
+
+export default withRouter(Root)

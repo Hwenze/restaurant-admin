@@ -19,8 +19,10 @@ module.exports = app => {
         await ctx.redirect('/login');
         return;
       }
+      const baseRoutes = ctx.app.config.baseRoutes || [];
       await ctx.renderClient('admin.js', {
-        menuList: menuList.concat(ctx.app.config.baseRoutes||[]),
+        // menuList: baseRoutes.concat(menuList),
+        menuList: menuList,
         userinfo: userinfo,
         token: token
       });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
-import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Switch, Route, withRouter } from 'react-router-dom';
 import Store from '~web/store';
 import Header from '~web/component/Header';
 import Sidebar from '~web/component/Sidebar';
@@ -14,7 +14,7 @@ const { Sider, Content } = Layout;
 
 import './index.less';
 
-export default class Admin extends Component {
+class Admin extends Component {
 
   constructor(props) {
     super(props);
@@ -39,7 +39,6 @@ export default class Admin extends Component {
   render() {
     const { menuList, baseRoutes } = this.props;
     const { passRoute = [] } = this.state;
-    console.log('passRoute',passRoute);
     return (
       <Provider store={Store && new Store()}>
         <BrowserRouter>
@@ -51,3 +50,5 @@ export default class Admin extends Component {
     );
   }
 }
+
+export default Admin;
