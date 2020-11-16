@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter, matchPath } from 'react-router'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import sidebarList from '~web/utils/sidebar';
 import './index.less';
@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
             return (
               <SubMenu
                 key={'sub' + item.path}
-                title={<span><i className={`anticon ${item.icon}`} /><span className="nav-text">{item.title}</span></span>}
+                title={<span>{item.icon && item.icon}<span className="nav-text">{item.title}</span></span>}
               >
                 {menu}
               </SubMenu>
@@ -84,7 +84,7 @@ class Sidebar extends React.Component {
             return (
               <Menu.Item key={'menu' + item.path}>
                 {
-                  item.path ? <Link to={item.path}>{item.icon && <i className={`anticon ${item.icon}`} />}{item.title}</Link> : <span>{item.icon && <i className={`anticon ${item.icon}`} />}{item.title}</span>
+                  item.path ? <Link to={item.path}>{item.icon && item.icon}{item.title}</Link> : <span>{item.icon && <i className={`anticon ${item.icon}`} />}{item.title}</span>
                 }
               </Menu.Item>
             )

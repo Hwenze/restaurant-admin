@@ -37,7 +37,7 @@ export default class Root extends Component {
             <Switch>
               {routerList.map((item, index) => {
                 if(menuList.findIndex(menu=>{
-                  return (item.path.indexOf(menu) !== -1)
+                  return (item.path.indexOf(menu) === -1)
                 })){
                   return <Route key={index}
                     path="/404"

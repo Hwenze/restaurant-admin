@@ -1,9 +1,17 @@
+import {
+  CoffeeOutlined,
+  FileDoneOutlined,
+  TeamOutlined,
+  DesktopOutlined,
+  BarChartOutlined
+} from '@ant-design/icons';
+import React from 'react';
 
 export default [
   {
     path:'/member',
     title:'会员模块',
-    icon:'anticon-user',
+    icon:<TeamOutlined/>,
     redirect:'/member/list',
     children:[
       {
@@ -21,7 +29,7 @@ export default [
   {
     path:'/order',
     title:'订单模块',
-    icon:'anticon-file',
+    icon:<FileDoneOutlined />,
     redirect:'/order/list',
     children:[
       {
@@ -39,7 +47,7 @@ export default [
   {
     path:'/product',
     title:'商品模块',
-    icon:'anticon-coffee',
+    icon:<CoffeeOutlined />,
     redirect:'/product/list',
     children:[
       {
@@ -62,7 +70,7 @@ export default [
   {
     path:'/operate',
     title:'运营模块',
-    icon:'anticon-desktop',
+    icon:<DesktopOutlined />,
     redirect:'/operate/user',
     children:[
       {
@@ -75,7 +83,7 @@ export default [
   {
     path:'/report',
     title:'报表模块',
-    icon:'anticon-bar-chart',
+    icon:<BarChartOutlined />,
     redirect:'/report/finance',
     children:[
       {
