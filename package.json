@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.1",
-    "antd": "^3.0.3",
+    "antd": "^4.8.3",
     "axios": "^0.21.0",
     "css-loader": "^5.0.1",
     "egg": "^2.1.0",
@@ -31,6 +31,7 @@
     "mobx-react": "^7.0.5",
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.17.1",
+    "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "querystring": "^0.2.0",
     "react": "^16.0.0",
