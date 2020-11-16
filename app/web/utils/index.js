@@ -1,3 +1,5 @@
+import queryString from 'querystring';
+
 export const jsonParse = (jsonString) => {
     let json;
     try {
@@ -42,11 +44,23 @@ export function getParentUrl(location) {
 
 
 // 分页属性
-export function getPaginationProps(pagination) {
+export function showPagination(pagination) {
     return {
         showSize: true,
         showQuick: true,
         showTotal: total => `共 ${total} 条记录`,
         ...pagination
     }
+}
+
+
+// 获取url参数
+export function gerUrlQuery(location = window.loaction) {
+    let args = {};
+    try {
+        args = queryString.parse(location.search);
+    } catch (err) {
+        console.log(err);
+    }
+    return args;
 }

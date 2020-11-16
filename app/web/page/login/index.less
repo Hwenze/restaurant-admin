@@ -1,0 +1,33 @@
+@import '../../libs/css/variable.less';
+@import '../../libs/css/reset.less';
+
+#app .login-root {
+  background: @mainColor;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-container {
+    width: 520px;
+    padding: 40px;
+    .title{
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin: 1em;
+      color:#fff;
+    }
+    input {
+
+      border: 1px solid hsla(0, 0%, 100%, .1);
+      background: rgba(0, 0, 0, .1);
+      border-radius: 5px;
+      color: #eee;
+      padding-left: 2em;
+    }
+    .button{
+      width: 100%;
+    }
+  }
+}

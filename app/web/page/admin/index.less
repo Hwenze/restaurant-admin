@@ -1,16 +1,42 @@
-html, body {
+@import '../../libs/css/common.less';
+
+html,
+body {
   margin: 0px 0px;
   padding: 0px 0px;
 }
-.admin-root{
+
+.admin-root {
   display: flex;
   height: 100vh;
   min-height: 100vh;
   flex-direction: column;
-  .admin-main{
-    flex:1;
-    .ant-layout-sider{
+
+  .admin-main {
+    flex: 1;
+
+    .ant-layout-sider {
       height: 100%;
+    }
+
+    .admin-content {
+      position: relative;
+      background: #fff;
+
+      .admin-header {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        top: 0;
+        padding: 0 20px;
+      }
+
+      .admin-container {
+        overflow: auto;
+        max-height: 100vh;
+        padding-top: 50px;
+      }
     }
   }
 }

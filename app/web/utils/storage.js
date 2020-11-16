@@ -31,7 +31,7 @@ class Storage {
         //先将拿到的试着进行json转为对象的形式
         item = jsonParse(item);
         //如果有startTime的值，说明设置了失效时间
-        if (item.startTime) {
+        if (item && item.startTime) {
             let date = new Date().getTime();
             //何时将值取出减去刚存入的时间，与item.expires比较，如果大于就是过期了，如果小于或等于就还没过期
             if (date - item.startTime > item.expires) {
