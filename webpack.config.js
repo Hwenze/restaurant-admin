@@ -21,6 +21,8 @@ module.exports = {
       '~web': path.resolve(__dirname, 'app/web'),
       '@web': path.resolve(__dirname, 'app/web'),
     },
-
+  },
+  externals:{
+    INITIAL_STATE:'window.__INITIAL_STATE__',
   }
 };
