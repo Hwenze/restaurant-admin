@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import { showPagination, getParentUrl } from '~web/utils';
+import 'antd/dist/antd.css';
 
 export default class BaseComponent extends Component {
   constructor(props) {

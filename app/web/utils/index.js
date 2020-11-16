@@ -65,18 +65,6 @@ export function gerUrlQuery(location = window.loaction) {
     return args;
 }
 
-// 过滤非法字符
-export function filterIllegal(value, isTrim) {
-    if (!value) {
-        return value;
-    }
-    return isTrim ?
-        trim(value.replace(/\u200B/ig, ''))
-        :
-        value.replace(/\u200B/ig, '');
-}
-
-
 // 去除前后空格
 export function trim(value) {
     if (!value || typeof value !== 'string') {
@@ -86,4 +74,12 @@ export function trim(value) {
         return value.trim();
     }
     return value.replace(/^[\s+|\t+]|[\s+|\t+]$/gm, '');
+}
+
+// 过滤非法字符
+export function filterIllegal(value, isTrim) {
+    if (!value) {
+        return value;
+    }
+    return isTrim ? trim(value.replace(/\u200B/ig, '')) : value.replace(/\u200B/ig, '');
 }
