@@ -47,8 +47,8 @@ request.interceptors.response.use(
 const http = {
   get: (url, params = {}, isSelf = false) => {
     if (isSelf) {
-      request.baseURL = 'http://127.0.0.1:8081';
-      request.credentials = 'include';
+      request.defaults.baseURL = 'http://127.0.0.1:8081';
+      request.defaults.credentials = 'include';
     }
     return new Promise((resolve, reject) => {
       request({
@@ -73,8 +73,8 @@ const http = {
       method: 'post'
     }
     if (isSelf) {
-      config.baseURL = 'http://127.0.0.1:8081';
-      config.credentials = 'include';
+      request.defaults.baseURL = 'http://127.0.0.1:8081';
+      request.defaults.credentials = 'include';
     }
     return new Promise((resolve, reject) => {
       request(config).then(res => {

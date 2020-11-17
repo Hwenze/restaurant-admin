@@ -74,6 +74,11 @@ export default [
     redirect:'/operate/user',
     children:[
       {
+        path:'/operate/home',
+        title:'运营首页',
+        icon:'',
+      },
+      {
         path:'/operate/user',
         title:'运营人员',
         icon:'',

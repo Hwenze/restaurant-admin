@@ -45,6 +45,7 @@ module.exports = app => {
     '/help',
     '/home',
     '/login/callback',
+    '/logout',
   ]
 
 

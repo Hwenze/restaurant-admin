@@ -14,10 +14,12 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.3.0",
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "antd": "^4.8.3",
     "axios": "^0.21.0",
     "css-loader": "^5.0.1",
+    "echarts": "^4.9.0",
     "egg": "^2.1.0",
     "egg-cors": "^2.2.3",
     "egg-logger": "^1.5.0",

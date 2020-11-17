@@ -32,6 +32,7 @@ module.exports = app => {
       const { ctx } = this;
 
       ctx.session = null;
+      ctx.cookies.set('EGG_SESS', null);
       ctx.cookies.set('x-uid.sig', null);
       ctx.cookies.set('x-uid', null);
       await ctx.redirect('/login');

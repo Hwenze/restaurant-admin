@@ -9,7 +9,7 @@ import { ROW_CONFIG, COL_CONFIG } from '~web/utils/constant';
 
 @inject(('store'))
 @observer
-export default class Home extends BaseComponent {
+export default class UserList extends BaseComponent {
 
   formRef = React.createRef();
   constructor(props) {

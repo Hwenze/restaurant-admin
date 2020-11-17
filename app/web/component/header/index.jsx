@@ -1,6 +1,7 @@
-import React from 'react'
-import { Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover } from 'antd'
-import { Link, withRouter } from 'react-router-dom'
+import React from 'react';
+import { Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover, message } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import { selfService } from '~web/service/self';
 import './index.less';
 
 const { Header } = Layout;
@@ -11,11 +12,22 @@ class commonHeader extends React.Component {
   }
 
   handleLogOut = () => {
-    const { logout } = this.props
-    logout().payload.promise.then(() => {
-      this.props.history.replace('/login');
-    });
+    const result = selfService.logout({});
+    result.then(res => {
+      message.success('注销成功！');
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+    }).catch(err => {
+      message.error('注销失败！');
+    })
   }
+
+  setCookie = (c_name, value, expiredays) => {                   
+    const exdate = new Date();                   
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "="+ escape (value) + ";expires=" + exdate.toGMTString();
+} 
 
   render() {
     const { profile = {} } = this.props;
