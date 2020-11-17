@@ -2,9 +2,9 @@ import axios from '~web/utils/axios';
 
 export const userService = {
     getUserInfo(){
-        return axios.get('/user/getUserInfo');
+        return axios.get('/operate/getUserInfo');
     },
     gerUserList(params){
-        return axios.get('/user/getUserList',params);
+        return axios.get('/operate/getUserList',params);
     },
 }

@@ -16,7 +16,7 @@ export default class UserList extends BaseComponent {
     super(props);
     this.state = {
       queryForm: {},
-      formLoad:false,
+      formLoad: false,
     }
   }
 
@@ -28,14 +28,12 @@ export default class UserList extends BaseComponent {
 
   loadData(params) {
     // 获取基本信息
-    const { store: { userStore } } = this.props;
+    const { store: { operateStore } } = this.props;
     this.setState({
       queryForm: params,
-      formLoad:true,
+      formLoad: true,
     })
-    userStore.getUserList(params).then(res => {
-      console.log('res', res);
-    })
+    operateStore.getUserList(params);
 
   }
   // 确认
@@ -51,18 +49,28 @@ export default class UserList extends BaseComponent {
   }
 
   render() {
-    const { store: { userStore } } = this.props;
-    const { queryForm,formLoad } = this.state;
-    const { userList = [], pagination = {} } = userStore.state;
+    const { store: { operateStore } } = this.props;
+    const { queryForm, formLoad } = this.state;
+    const { userList , pagination } = operateStore.state;
     const columns = [
       {
         title: '运营账号',
-        dataIndex: 'uid',
+        dataIndex: 'username',
         align: 'center',
       },
       {
         title: '用户名称',
         dataIndex: 'nickname',
+        align: 'center',
+      },
+      {
+        title: '账号状态',
+        dataIndex: 'status',
+        align: 'center',
+      },
+      {
+        title: '账号称号',
+        dataIndex: 'role',
         align: 'center',
       },
       {
@@ -80,7 +88,7 @@ export default class UserList extends BaseComponent {
           initialValues={{
             q_username: queryForm.q_username,
             q_nickname: queryForm.q_nickname,
-            q_status: queryForm.q_status ,
+            q_status: queryForm.q_status,
             q_role: queryForm.q_role
           }}
         >
@@ -98,25 +106,23 @@ export default class UserList extends BaseComponent {
             <Col {...COL_CONFIG}>
               <Form.Item name="q_role" label="权限" >
                 <Select data={[
-                  {label:'店长',value:1},
-                  {label:'游客',value:2}
-                ]}/>
+                  { label: '店长', value: 1 },
+                  { label: '游客', value: 2 }
+                ]} />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
                 <Select data={[
-                  {label:'正常',value:1},
-                  {label:'冻结',value:0}
-                ]}/>
+                  { label: '正常', value: 1 },
+                  { label: '冻结', value: 0 }
+                ]} />
               </Form.Item>
             </Col>
-            <Col {...COL_CONFIG} offset={18}> 
-              <Form.Item className="df ai-c jc-fe">
-                <Button htmlType="submit" type="primary">搜索</Button>
-                <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
-              </Form.Item>
-            </Col>
+            <div className="search-btns">
+              <Button htmlType="submit" type="primary">搜索</Button>
+              <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+            </div>
           </Row>
         </Form>}
         <Table
@@ -124,7 +130,7 @@ export default class UserList extends BaseComponent {
           bordered
           columns={columns}
           dataSource={userList}
-          rowKey={record => record.uid}
+          rowKey={record => record.id}
           pagination={this.showPagination(pagination)}
           onChange={this.changeTable}
         >

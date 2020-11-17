@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '~web/layout/base';
-import { Card, Table, Form, Select ,Row, Col, Button } from 'antd';
+import { Card, Table, Form, Select, Row, Col, Button } from 'antd';
 import Input from '~web/component/Input';
 // import Select from '~web/component/Select';
 import { gerUrlQuery } from '~web/utils';
@@ -97,26 +97,24 @@ export default class UserList extends BaseComponent {
             <Col {...COL_CONFIG}>
               <Form.Item name="q_role" label="权限" >
                 <Select data={[
-                  {label:'店长',value:1},
-                  {label:'游客',value:2}
-                ]}/>
+                  { label: '店长', value: 1 },
+                  { label: '游客', value: 2 }
+                ]} />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
                 <Select data={[
-                  {label:'正常',value:1},
-                  {label:'冻结',value:0}
-                ]}/>
-              </Form.Item>
-            </Col>
-            <Col {...COL_CONFIG} offset={18}>
-              <Form.Item className="df ai-c jc-fe">
-                <Button htmlType="submit" type="primary">搜索</Button>
-                <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+                  { label: '正常', value: 1 },
+                  { label: '冻结', value: 0 }
+                ]} />
               </Form.Item>
             </Col>
           </Row>
+          <div className="search-btns">
+            <Button htmlType="submit" type="primary">搜索</Button>
+            <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+          </div>
         </Form>
         <Table
           className="body-table"
