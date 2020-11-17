@@ -1,15 +1,17 @@
 import React from 'react';
 import BaseComponent from '~web/layout/base';
-import { Card, Table, Input, Form, Row, Col, Button } from 'antd';
+import { Card, Table, Form, Row, Col, Button } from 'antd';
+import Input from '~web/component/Input';
+import Select from '~web/component/Select';
 import { gerUrlQuery } from '~web/utils';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG } from '~web/utils/constant';
-const FormItem = Form.Item;
 
-@Form.create()
 @inject(('store'))
 @observer
 export default class UserList extends BaseComponent {
+
+  formRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -34,24 +36,20 @@ export default class UserList extends BaseComponent {
     })
 
   }
-
-  handleSearch = (e) => {
-    e && e.preventDefault();
-    const { form } = this.props;
-    form.validateFields((err, val) => {
-      if (err) return;
-      this.pushUrlQuery({
-        ...val,
-        current: 1,
-      });
-    })
-
-
+  // 确认
+  onFinish = (value) => {
+    this.pushUrlQuery({
+      ...value,
+      current: 1,
+    });
+  }
+  // 重置
+  onReset = () => {
+    this.formRef.current.resetFields();
   }
 
   render() {
     const { store: { userStore }, form } = this.props;
-    const { getFieldDecorator } = form;
     const { queryForm } = this.state;
     const { userList = [], pagination = {} } = userStore.state;
     const columns = [
@@ -70,51 +68,43 @@ export default class UserList extends BaseComponent {
         align: 'center',
       }
     ];
+
+
     return (
       <Card bordered={false}>
-        <Form className="body-form df-form" onSubmit={this.handleSearch}>
+        <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
-              <FormItem label="用户名">
-                {getFieldDecorator('q_username', {
-                  initialValue: queryForm.username,
-                })(
-                  <Input placeholder='请输入用户名' />
-                )}
-              </FormItem>
+              <Form.Item name="q_username" label="用户名" >
+                <Input text='请输入用户名' />
+              </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
-              <FormItem label="昵称">
-                {getFieldDecorator('q_nickname', {
-                  initialValue: queryForm.nickname,
-                })(
-                  <Input placeholder='请输入昵称' />
-                )}
-              </FormItem>
+              <Form.Item name="q_nickname" label="昵称" >
+                <Input text='请输入昵称' />
+              </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
-              <FormItem label="权限">
-                {getFieldDecorator('q_role', {
-                  initialValue: queryForm.role,
-                })(
-                  <Input placeholder='请选择' />
-                )}
-              </FormItem>
+              <Form.Item name="q_role" label="权限" >
+                <Select data={[
+                  {label:'店长',value:1},
+                  {label:'游客',value:2}
+                ]}/>
+              </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
-              <FormItem label="状态">
-                {getFieldDecorator('q_status', {
-                  initialValue: queryForm.status,
-                })(
-                  <Input placeholder='请选择' />
-                )}
-              </FormItem>
+              <Form.Item name="q_status" label="状态" >
+                <Select data={[
+                  {label:'正常',value:1},
+                  {label:'冻结',value:0}
+                ]}/>
+              </Form.Item>
             </Col>
             <Col {...COL_CONFIG} offset={18}>
-              <FormItem className="df ai-c jc-fe">
-                <Button htmltype="submit" type="primary">搜索</Button>
-                <Button style={{marginLeft:'12px'}} onClick={this.reset}>重置</Button>
-              </FormItem>
+              <Form.Item className="df ai-c jc-fe">
+                <Button htmlType="submit" type="primary">搜索</Button>
+                <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+              </Form.Item>
             </Col>
           </Row>
         </Form>

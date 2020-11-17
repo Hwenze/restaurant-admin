@@ -58,24 +58,14 @@ export function showPagination(pagination) {
 export function gerUrlQuery(location = window.loaction) {
     let args = {};
     try {
-        args = queryString.parse(location.search);
+        let search = location.search;
+        search = search.startsWith('?') ? search.substr(1) : search;
+        args = queryString.parse(search);
     } catch (err) {
         console.log(err);
     }
     return args;
 }
-
-// 过滤非法字符
-export function filterIllegal(value, isTrim) {
-    if (!value) {
-        return value;
-    }
-    return isTrim ?
-        trim(value.replace(/\u200B/ig, ''))
-        :
-        value.replace(/\u200B/ig, '');
-}
-
 
 // 去除前后空格
 export function trim(value) {
@@ -86,4 +76,12 @@ export function trim(value) {
         return value.trim();
     }
     return value.replace(/^[\s+|\t+]|[\s+|\t+]$/gm, '');
+}
+
+// 过滤非法字符
+export function filterIllegal(value, isTrim) {
+    if (!value) {
+        return value;
+    }
+    return isTrim ? trim(value.replace(/\u200B/ig, '')) : value.replace(/\u200B/ig, '');
 }

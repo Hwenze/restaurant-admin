@@ -12,15 +12,14 @@ export default class CInput extends Component {
     isTrim: PropTypes.bool
   }
 
-  onChange = () => {
-    const { onChange, isTrim } = this.props;
-
+  onChange = (e) => {
+    const { onChange, isTrim = false } = this.props;
     const value = filterIllegal(e.target.value, isTrim);
     onChange && onChange(value);
   }
 
   render() {
-    const { text, style, value, onChange, ...restProps } = this.props;
+    const { text, style, value, onChange, isTrim, ...restProps } = this.props;
 
     return (
       <Input style={style}

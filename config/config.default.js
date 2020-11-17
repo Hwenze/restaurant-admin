@@ -40,6 +40,7 @@ module.exports = app => {
 
   // 基础路由 即不需要验证的路由
   exports.baseRoutes = [
+    '/404',
     '/login',
     '/help',
     '/home',

@@ -14,7 +14,7 @@ export default class CSelect extends Component {
     // 内容配置
     labelValue: {
       label: 'label',
-      valiue: 'value',
+      value: 'value',
     }
   };
 
@@ -33,7 +33,8 @@ export default class CSelect extends Component {
       labelValue, value,
       allowClear, ...restProps
     } = this.props;
-    let data = this.props;
+
+    let { data } = this.props;
     if (typeof data !== 'object') {
       data = [];
     }
@@ -54,10 +55,10 @@ export default class CSelect extends Component {
         {...selectConfig}
         {...restProps}
       >
-        {showTotal && <Option value="">全部</Option>}
-        {data.map(item=>{
+        {/* {showTotal && <Option value="">全部</Option>} */}
+        {data.map(item => {
           return <Option key={item[labelValue.value]}>
-            {labelFormat(item,labelValue.label)}
+            {labelFormat(item, labelValue.label)}
           </Option>
         })}
 
