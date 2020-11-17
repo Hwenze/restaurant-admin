@@ -44,10 +44,10 @@ export default class Login extends BaseComponent {
           <Form className="login-container" ref={this.formRef} onFinish={this.onFinish}>
             <div className="title">系统登录</div>
             <Form.Item name="username" rules={[{ required: true, message: '用户名不能为空', max: 30, }]}>
-              <Input size="large" text='请输入用户名' prefix={<UserOutlined style={{ fontSize: 16, color: '#fff' }} />} />
+              <Input size="large" text='text' placeholder="请输入用户名" prefix={<UserOutlined style={{ fontSize: 16, color: '#fff' }} />} />
             </Form.Item>
             <Form.Item name="password" rules={[{ required: true, message: '密码不能为空', max: 30, }]}>
-              <Input size="large" text='请输入密码' prefix={<LockOutlined style={{ fontSize: 16, color: '#fff' }} />} />
+              <Input.Password size="large" text='text' placeholder="请输入密码"  prefix={<LockOutlined style={{ fontSize: 16, color: '#fff' }} />} />
             </Form.Item>
             <Form.Item>
               <Button size="large" type="primary" htmlType="submit" className="button">登录</Button>
