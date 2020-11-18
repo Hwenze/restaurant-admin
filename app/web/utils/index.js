@@ -92,7 +92,7 @@ export function mapValue(arr, target = '', format={}) {
     if (!Array.isArray(arr)) {
         return ''
     }
-    if (!target) {
+    if (!target && target !== 0) {
         return target;
     }
     let resultLabel = '';

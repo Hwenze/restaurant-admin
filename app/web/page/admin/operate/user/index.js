@@ -1,12 +1,13 @@
 import React from 'react';
 import BaseComponent from '~web/layout/base';
-import { Card, Table, Form, Row, Col, Button, Modal } from 'antd';
+import { Card, Table, Form, Row, Col, Button, Popconfirm, message } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
 import { gerUrlQuery, mapValue } from '~web/utils';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG, COMMON_STATUS } from '~web/utils/constant';
 import UserItem from './item';
+import { operateService } from '~web/service/operate';
 
 @inject(('store'))
 @observer
@@ -24,9 +25,10 @@ export default class UserList extends BaseComponent {
   }
 
   componentDidMount() {
-    const { location } = this.props;
+    const { location, store: { operateStore } } = this.props;
     const query = gerUrlQuery(location);
     this.loadData(query);
+    operateStore.initRoleList();
   }
 
   loadData(params) {
@@ -36,7 +38,6 @@ export default class UserList extends BaseComponent {
       queryForm: params,
       formLoad: true,
     })
-    operateStore.initRoleList();
     operateStore.getUserList(params);
 
   }
@@ -62,6 +63,41 @@ export default class UserList extends BaseComponent {
         role: null
       }
     })
+  }
+  // 删除用户
+  deleteUser = item => {
+    operateService.deleteUser(item.id).then(res => {
+      if (res) {
+        message[res.type](res.msg);
+        this.reload();
+      }
+    })
+  }
+
+  // 更改用户状态
+  changeStatus = item => {
+    console.log(item);
+    operateService.changeUserStatus(item.id).then(res => {
+      if (res) {
+        message[res.type](res.msg);
+        res.code === 200 && this.reload();
+      }
+    })
+  }
+
+  // modal回调
+  modalClose = (isLoad) => {
+    this.setState({ visible: false });
+    if (isLoad) {
+      this.reload();
+    }
+  }
+
+  // 重新加载
+  reload() {
+    const { location } = this.props;
+    const query = gerUrlQuery(location);
+    this.loadData(query);
   }
 
   render() {
@@ -98,8 +134,12 @@ export default class UserList extends BaseComponent {
         render: (item) => {
           return <>
             <Button type="link" onClick={() => this.setState({ visible: true, currentData: item })}>编辑</Button>
-            <Button type="link" >{item.status === 1 ? '冻结' : '解冻'}</Button>
-            <Button type="link" danger>删除</Button>
+            <Popconfirm title={`是否要${item.status === 1 ? '冻结' : '解冻'}该用户？`} onConfirm={() => this.changeStatus(item)}>
+              <Button type="link" >{item.status === 1 ? '冻结' : '解冻'}</Button>
+            </Popconfirm>
+            <Popconfirm title="是否要删除？删除后不可恢复。" onConfirm={() => this.deleteUser(item)}>
+              <Button type="link" danger>删除</Button>
+            </Popconfirm>
           </>
         }
       }
@@ -148,7 +188,7 @@ export default class UserList extends BaseComponent {
         </Form>}
         {formLoad && <UserItem
           visible={visible}
-          onClose={() => this.setState({ visible: false })}
+          onClose={this.modalClose}
           itemData={currentData}
           roleList={roleList}
         />}

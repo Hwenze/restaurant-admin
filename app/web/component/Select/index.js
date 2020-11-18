@@ -28,12 +28,10 @@ export default class CSelect extends Component {
   render() {
     const {
       mode = '', text,
-      value,
-      onSelect, onChange,labelValue, 
+      value, onSelect, onChange, labelValue,
       showTotal, labelFormat,
       allowClear, ...restProps
     } = this.props;
-
     let { data } = this.props;
     if (typeof data !== 'object') {
       data = [];
@@ -49,7 +47,6 @@ export default class CSelect extends Component {
         return option.props.children.toLowerCase().indexOf(filterIllegal(input, true).toLowerCase()) >= 0
       }
     };
-
     return (
       <Select
         {...selectConfig}
@@ -57,7 +54,7 @@ export default class CSelect extends Component {
       >
         {/* {showTotal && <Option value="">全部</Option>} */}
         {data.map(item => {
-          return <Option key={item[labelValue.value]}>
+          return <Option key={item[labelValue.value]} value={`${item[labelValue.value]}`}>
             {labelFormat(item, labelValue.label)}
           </Option>
         })}
