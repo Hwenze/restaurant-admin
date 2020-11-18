@@ -86,6 +86,18 @@ export function filterIllegal(value, isTrim) {
     return isTrim ? trim(value.replace(/\u200B/ig, '')) : value.replace(/\u200B/ig, '');
 }
 
+// 节流函数
+export function throttle(fn, delay) {
+    let timer = null;
+    return function() {
+        const context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            fn.apply(context, args);
+        }, delay);
+    };
+}
+
 // 根据map的value返回label
 export function mapValue(arr, target = '', format={}) {
     const { label = 'label', value = 'value' } = format;

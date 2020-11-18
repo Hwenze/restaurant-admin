@@ -85,6 +85,16 @@ let routeConfig = {
     path: ['/report/finance'],
     component: () => import('~web/page/admin/report/finance')
   },
+  /* -----其他模块----- */
+  '/other': {
+    path: ['/other'],
+    component: () => import('~web/page/admin/other/user-agreement')
+  },
+  // 财务报表
+  '/other/user-agreement': {
+    path: ['/other/user-agreement'],
+    component: () => import('~web/page/admin/other/user-agreement')
+  },
   // 404
   '/404': {
     path: ['/404', '*'],
