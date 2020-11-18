@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
+import BaseComponent from '~web/layout/base';
+import { Card } from 'antd';
 import Chart from "../../../../component/Chart";
 import './index.less';
 
-export default class HeatmapChart extends Component {
+export default class HeatmapChart extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -187,7 +189,7 @@ export default class HeatmapChart extends Component {
     const option4 = this.getOption4();
 
     return (
-      <div className="home-box">
+      <Card bordered={false} title="运营首页">
         <div className="chart-box">
           <Chart renderer={renderer} option={option1} />
         </div>
@@ -200,7 +202,7 @@ export default class HeatmapChart extends Component {
         <div className="chart-box">
           <Chart renderer={renderer} option={option4} />
         </div>
-      </div>
+      </Card>
     )
   }
 }

@@ -3,7 +3,8 @@ import {
   FileDoneOutlined,
   TeamOutlined,
   DesktopOutlined,
-  BarChartOutlined
+  BarChartOutlined,
+  AppstoreAddOutlined
 } from '@ant-design/icons';
 import React from 'react';
 
@@ -94,6 +95,19 @@ export default [
       {
         path:'/report/finance',
         title:'报表人员',
+        icon:'',
+      },
+    ]
+  },
+  {
+    path:'/other',
+    title:'其他模块',
+    icon:<AppstoreAddOutlined />,
+    redirect:'/other/user-agreement',
+    children:[
+      {
+        path:'/other/user-agreement',
+        title:'用户协议',
         icon:'',
       },
     ]
