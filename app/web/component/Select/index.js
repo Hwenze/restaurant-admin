@@ -28,9 +28,9 @@ export default class CSelect extends Component {
   render() {
     const {
       mode = '', text,
-      onSelect, onChange,
+      value,
+      onSelect, onChange,labelValue, 
       showTotal, labelFormat,
-      labelValue, value,
       allowClear, ...restProps
     } = this.props;
 

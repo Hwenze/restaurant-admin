@@ -1,13 +1,16 @@
 import { observable, action } from 'mobx';
-import { operateService } from '~web/service/operate';
+import { operateService, roleService } from '~web/service/operate';
 
 const state = {
-  userList: [],
   pagination: {
     current: 1,
     pageSize: 10,
     total: 0,
-  }
+  },
+  // 员工列表
+  userList: [],
+  // 权限列表
+  roleList: [],
 }
 
 export default class Common {
@@ -41,6 +44,15 @@ export default class Common {
       })
     })
 
+  }
+
+  @action initRoleList() {
+    roleService.getRoleList().then(res => {
+      if (res.code === 200 && res.data) {
+        this.state.roleList = res.data.list;
+      }
+    }).catch(err => {
+    })
   }
 
   @action reset() {

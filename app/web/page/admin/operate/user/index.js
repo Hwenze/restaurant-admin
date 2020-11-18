@@ -1,11 +1,12 @@
 import React from 'react';
 import BaseComponent from '~web/layout/base';
-import { Card, Table, Form, Row, Col, Button } from 'antd';
+import { Card, Table, Form, Row, Col, Button, Modal } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
-import { gerUrlQuery } from '~web/utils';
+import { gerUrlQuery, mapValue } from '~web/utils';
 import { observer, inject } from 'mobx-react';
-import { ROW_CONFIG, COL_CONFIG } from '~web/utils/constant';
+import { ROW_CONFIG, COL_CONFIG, COMMON_STATUS } from '~web/utils/constant';
+import UserItem from './item';
 
 @inject(('store'))
 @observer
@@ -17,6 +18,8 @@ export default class UserList extends BaseComponent {
     this.state = {
       queryForm: {},
       formLoad: false,
+      visible: false,
+      currentData: {}, // 当前用户
     }
   }
 
@@ -33,6 +36,7 @@ export default class UserList extends BaseComponent {
       queryForm: params,
       formLoad: true,
     })
+    operateStore.initRoleList();
     operateStore.getUserList(params);
 
   }
@@ -47,11 +51,23 @@ export default class UserList extends BaseComponent {
   onReset = () => {
     this.formRef.current.resetFields();
   }
+  // 添加用户
+  add = () => {
+    this.setState({
+      visible: true,
+      currentData: {
+        id: null,
+        username: '',
+        nickname: '',
+        role: null
+      }
+    })
+  }
 
   render() {
     const { store: { operateStore } } = this.props;
-    const { queryForm, formLoad } = this.state;
-    const { userList , pagination } = operateStore.state;
+    const { queryForm, formLoad, visible, currentData } = this.state;
+    const { userList = [], pagination = {}, roleList = [] } = operateStore.state;
     const columns = [
       {
         title: '运营账号',
@@ -67,15 +83,25 @@ export default class UserList extends BaseComponent {
         title: '账号状态',
         dataIndex: 'status',
         align: 'center',
+        render: (val) => mapValue(COMMON_STATUS, val)
       },
       {
         title: '账号称号',
         dataIndex: 'role',
         align: 'center',
+        render: (val) => mapValue(roleList.toJS(), val, { label: 'name', value: 'id' })
       },
       {
         title: '操作',
         align: 'center',
+        width: 250,
+        render: (item) => {
+          return <>
+            <Button type="link" onClick={() => this.setState({ visible: true, currentData: item })}>编辑</Button>
+            <Button type="link" >{item.status === 1 ? '冻结' : '解冻'}</Button>
+            <Button type="link" danger>删除</Button>
+          </>
+        }
       }
     ];
 
@@ -105,26 +131,27 @@ export default class UserList extends BaseComponent {
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_role" label="权限" >
-                <Select data={[
-                  { label: '店长', value: 1 },
-                  { label: '游客', value: 2 }
-                ]} />
+                <Select labelValue={{ label: 'name', value: 'id' }} data={roleList.toJS()} />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
-                <Select data={[
-                  { label: '正常', value: 1 },
-                  { label: '冻结', value: 0 }
-                ]} />
+                <Select data={COMMON_STATUS} />
               </Form.Item>
             </Col>
             <div className="search-btns">
+              <Button className="add-btn" type="primary" onClick={this.add}>添加</Button>
               <Button htmlType="submit" type="primary">搜索</Button>
               <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
             </div>
           </Row>
         </Form>}
+        {formLoad && <UserItem
+          visible={visible}
+          onClose={() => this.setState({ visible: false })}
+          itemData={currentData}
+          roleList={roleList}
+        />}
         <Table
           className="body-table"
           bordered

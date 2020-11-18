@@ -97,3 +97,21 @@ export function throttle(fn, delay) {
         }, delay);
     };
 }
+
+// 根据map的value返回label
+export function mapValue(arr, target = '', format={}) {
+    const { label = 'label', value = 'value' } = format;
+    if (!Array.isArray(arr)) {
+        return ''
+    }
+    if (!target) {
+        return target;
+    }
+    let resultLabel = '';
+    for (const item of arr) {
+        if (item[value] === target) {
+           resultLabel = item[label];
+        }
+    }
+    return resultLabel;
+}

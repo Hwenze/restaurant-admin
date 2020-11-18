@@ -47,7 +47,7 @@ export default class Login extends BaseComponent {
               <Input size="large" text='text' placeholder="请输入用户名" prefix={<UserOutlined style={{ fontSize: 16, color: '#fff' }} />} />
             </Form.Item>
             <Form.Item name="password" rules={[{ required: true, message: '密码不能为空', max: 30, }]}>
-              <Input.Password size="large" text='text' placeholder="请输入密码"  prefix={<LockOutlined style={{ fontSize: 16, color: '#fff' }} />} />
+              <Input.Password size="large" text='text' placeholder="请输入密码" prefix={<LockOutlined style={{ fontSize: 16, color: '#fff' }} />} />
             </Form.Item>
             <Form.Item>
               <Button size="large" type="primary" htmlType="submit" className="button">登录</Button>
