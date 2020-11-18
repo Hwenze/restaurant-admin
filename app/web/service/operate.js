@@ -28,7 +28,18 @@ export const operateService = {
 
 export const roleService = {
     // 获取权限列表
-    getRoleList() {
-        return axios.get('/operate/getRoleList');
+    getRoleList(params) {
+        return axios.get('/operate/getRoleList', params);
+    },
+    // 启用禁用权限
+    changeRoleStatus(roleId) {
+        return axios.post('/operate/changeRoleStatus', { id: roleId });
+    },
+    deleteRole(roleId){
+        return axios.post('/operate/deleteRole', { id: roleId });
+    },
+    // 获取权限详情
+    getRoleInfo(roleId){
+        return axios.get('/operate/getRoleInfo', { id: roleId });
     }
 }

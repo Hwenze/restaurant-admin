@@ -53,7 +53,7 @@ let routeConfig = {
   },
   // 订单详情
   '/order/detail': {
-    path: ['/order/detail'],
+    path: ['/order/detail/:id'],
     component: () => import('~web/page/admin/order/detail')
   },
   /* -----运营模块----- */
@@ -71,10 +71,16 @@ let routeConfig = {
     path: ['/operate/user'],
     component: () => import('~web/page/admin/operate/user')
   },
-  // '/operate/detail': {
-  //   path: ['/operate/detail'],
-  //   component: () => import('~web/page/admin/operate/detail')
-  // },
+  // 权限列表
+  '/operate/role': {
+    path: ['/operate/role'],
+    component: () => import('~web/page/admin/operate/role')
+  },
+  // 权限列表
+  '/operate/role/detail': {
+    path: ['/operate/role/:id'],
+    component: () => import('~web/page/admin/operate/role/detail')
+  },
   /* -----报表模块----- */
   '/report': {
     path: ['/report'],

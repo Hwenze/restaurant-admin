@@ -84,6 +84,11 @@ export default [
         title:'运营人员',
         icon:'',
       },
+      {
+        path:'/operate/role',
+        title:'权限列表',
+        icon:'',
+      },
     ]
   },
   {

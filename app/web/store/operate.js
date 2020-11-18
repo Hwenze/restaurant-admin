@@ -43,11 +43,14 @@ export default class Common {
         resolve(err);
       })
     })
-
   }
 
-  @action initRoleList() {
-    roleService.getRoleList().then(res => {
+  @action initRoleList(params = {}) {
+    const options = {
+      name: params.q_name,
+      status: params.q_status,
+    }
+    roleService.getRoleList(options).then(res => {
       if (res.code === 200 && res.data) {
         this.state.roleList = res.data.list;
       }
