@@ -91,12 +91,27 @@ let routeConfig = {
     path: ['/report/finance'],
     component: () => import('~web/page/admin/report/finance')
   },
+  /* -----活动模块----- */
+  '/activity': {
+    path: ['/activity'],
+    component: () => import('~web/page/admin/activity/real-time-info')
+  },
+  // 活动资讯
+  '/activity/real-time-info': {
+    path: ['/activity/real-time-info'],
+    component: () => import('~web/page/admin/activity/real-time-info')
+  },
+  // 活动资讯详情
+  '/activity/real-time-info/detail': {
+    path: ['/activity/real-time-info/detail'],
+    component: () => import('~web/page/admin//activity/real-time-info/detail')
+  },
   /* -----其他模块----- */
   '/other': {
     path: ['/other'],
     component: () => import('~web/page/admin/other/user-agreement')
   },
-  // 财务报表
+  // 用户协议
   '/other/user-agreement': {
     path: ['/other/user-agreement'],
     component: () => import('~web/page/admin/other/user-agreement')

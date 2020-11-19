@@ -20,8 +20,7 @@ export default class userAgreement extends BaseComponent {
   }
 
   componentDidMount() {
-    const result = getAgreement();
-    result.then(res => {
+    getAgreement().then(res => {
       this.setState({
         editorState: BraftEditor.createEditorState(res.data.agreement)
       })
@@ -38,8 +37,7 @@ export default class userAgreement extends BaseComponent {
 
   save = () => {
     const agreement = this.state.editorState.toHTML();
-    const result = setAgreement({agreement});
-    result.then(res => {
+    setAgreement({agreement}).then(res => {
       message.success(res.data);
     }).catch(err => {
       message.error(err.msg);
