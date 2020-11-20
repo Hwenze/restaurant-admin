@@ -74,7 +74,6 @@ export default class UserRolePage extends BaseComponent {
 
   // 更改用户状态
   changeStatus = item => {
-    console.log(item);
     roleService.changeRoleStatus(item.id).then(res => {
       if (res) {
         message[res.type](res.msg);

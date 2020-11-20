@@ -115,6 +115,11 @@ export default class realRimeInfo extends BaseComponent {
                 align: 'center',
             },
             {
+                title: '介绍',
+                dataIndex: 'introduce',
+                align: 'center',
+            },
+            {
                 title: '开始时间',
                 dataIndex: 'star_time',
                 align: 'center',
