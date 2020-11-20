@@ -116,6 +116,11 @@ let routeConfig = {
     path: ['/other/user-agreement'],
     component: () => import('~web/page/admin/other/user-agreement')
   },
+  // 首页轮播
+  '/other/home-rotation': {
+    path: ['/other/home-rotation'],
+    component: () => import('~web/page/admin/other/home-rotation')
+  },
   // 404
   '/404': {
     path: ['/404', '*'],
