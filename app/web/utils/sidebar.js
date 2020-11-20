@@ -114,6 +114,11 @@ export default [
         title:'用户协议',
         icon:'',
       },
+      {
+        path:'/other/home-rotation',
+        title:'首页轮播',
+        icon:'',
+      },
     ]
   }
 ]
