@@ -4,14 +4,14 @@ export function getHomeRotation(params) {
     return axios.get('/api/getHomeRotation', params);
 }
 
-export function getRealTimeDateils(params) {
-    return axios.get('/activity/getRealTimeDateils', params);
+export function getRotationDateils(params) {
+    return axios.get('/api/getRotationDateils', params);
 }
 
 export function changeStatus(params) {
     return axios.post('/api/changeRotationStatus', params);
 }
 
-export function updateRealTimeInfo(params) {
-    return axios.post('/activity/updateRealTimeInfo', params);
+export function updateRotationDateils(params) {
+    return axios.post('/api/updateRotationDateils', params);
 }

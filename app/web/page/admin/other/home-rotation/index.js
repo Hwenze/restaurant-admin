@@ -11,7 +11,6 @@ export default class homeRotation extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-      queryForm: {},
       dataList: [],   //列表数据
     }
   }
@@ -67,7 +66,7 @@ export default class homeRotation extends BaseComponent {
         width: 250,
         render: (item) => {
           return <>
-            <Link style={{ padding: '4px 15px' }} to={`/activity/real-time-info/detail?id=${item.id}`} type="link">编辑</Link>
+            <Link style={{ padding: '4px 15px' }} to={`/other/home-rotation/details/${item.id}`} type="link">编辑</Link>
             <Popconfirm title={`是否要${item.status === 1 ? '禁用' : '启用'}该权限？`} onConfirm={() => this.changeStatusFnc(item)}>
               <Button type="link" >{item.status === 1 ? '禁用' : '启用'}</Button>
             </Popconfirm>

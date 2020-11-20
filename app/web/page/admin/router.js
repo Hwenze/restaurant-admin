@@ -121,6 +121,11 @@ let routeConfig = {
     path: ['/other/home-rotation'],
     component: () => import('~web/page/admin/other/home-rotation')
   },
+  // 首页轮播详情
+  '/other/home-rotation/details': {
+    path: ['/other/home-rotation/details/:id'],
+    component: () => import('~web/page/admin/other/home-rotation/details')
+  },
   // 404
   '/404': {
     path: ['/404', '*'],
