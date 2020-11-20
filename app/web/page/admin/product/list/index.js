@@ -1,43 +1,48 @@
 import React from 'react';
 import BaseComponent from '~web/layout/base';
-import { Card, Table, Form, Row, Col, Button } from 'antd';
+import { Card, Table, Form, Row, Col, Button, Popconfirm, message } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
-import { gerUrlQuery } from '~web/utils';
+import { gerUrlQuery, mapValue } from '~web/utils';
 import { observer, inject } from 'mobx-react';
-import { ROW_CONFIG, COL_CONFIG } from '~web/utils/constant';
+import { ROW_CONFIG, COL_CONFIG, PRODUCT_STATUS } from '~web/utils/constant';
+import { productService } from '~web/service/product';
+import { Link } from 'react-router-dom';
+import { pvImage } from '~web/component/pv';
 
 @inject(('store'))
 @observer
-export default class UserList extends BaseComponent {
+export default class ProductList extends BaseComponent {
 
   formRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
-      queryForm: {}
+      queryForm: {},
+      formLoad: false,
+      visible: false,
+      currentData: {}, // 当前用户
     }
   }
 
   componentDidMount() {
-    const { location } = this.props;
+    const { location, store: { productStore } } = this.props;
     const query = gerUrlQuery(location);
     this.loadData(query);
   }
 
   loadData(params) {
     // 获取基本信息
-    const { store: { userStore } } = this.props;
+    const { store: { productStore } } = this.props;
     this.setState({
-      queryForm: params
+      queryForm: params,
+      formLoad: true,
     })
-    userStore.getUserList(params).then(res => {
-      console.log('res', res);
-    })
+    productStore.getProductList(params);
 
   }
   // 确认
-  onFinish = (value) => {
+  onFinish = value => {
     this.pushUrlQuery({
       ...value,
       current: 1,
@@ -48,72 +53,140 @@ export default class UserList extends BaseComponent {
     this.formRef.current.resetFields();
   }
 
+  // 删除用户
+  // deleteUser = item => {
+  //   productService.deleteUser(item.id).then(res => {
+  //     if (res) {
+  //       message[res.type](res.msg);
+  //       this.reload();
+  //     }
+  //   })
+  // }
+
+  // 更改用户状态
+  changeStatus = item => {
+    console.log(item);
+    productService.changeProductStatus(item.id).then(res => {
+      if (res) {
+        message[res.type](res.msg);
+        res.code === 200 && this.reload();
+      }
+    })
+  }
+
+  // modal回调
+  modalClose = (isLoad) => {
+    this.setState({ visible: false });
+    if (isLoad) {
+      this.reload();
+    }
+  }
+
+  // 重新加载
+  reload() {
+    const { location } = this.props;
+    const query = gerUrlQuery(location);
+    this.loadData(query);
+  }
+
   render() {
-    const { store: { userStore }, form } = this.props;
-    const { queryForm } = this.state;
-    const { userList = [], pagination = {} } = userStore.state;
+    const { store: { productStore } } = this.props;
+    const { queryForm, formLoad, visible, currentData } = this.state;
+    const { productList = [], pagination = {}, roleList = [] } = productStore.state;
     const columns = [
       {
-        title: 'ID',
-        dataIndex: 'uid',
+        title: '商品ID',
+        dataIndex: 'id',
         align: 'center',
       },
       {
-        title: '用户名称',
-        dataIndex: 'nickname',
+        title: '商品标题',
+        dataIndex: 'title',
+        align: 'center',
+      },
+      {
+        title: '商品图片',
+        dataIndex: 'banner',
+        align: 'center',
+        render: (val) => (
+          <img className="table-item-image" src={val} onClick={() => pvImage(val)} />
+        )
+      },
+      {
+        title: '售价',
+        dataIndex: 'price',
+        align: 'center',
+      },
+      {
+        title: '商品状态',
+        dataIndex: 'status',
+        align: 'center',
+        render: (val) => mapValue(PRODUCT_STATUS, val)
+      },
+      {
+        title: '创建时间',
+        dataIndex: 'create_time',
         align: 'center',
       },
       {
         title: '操作',
         align: 'center',
+        width: 160,
+        render: (item) => {
+          return <>
+            <Button type="link" >
+              <Link to={`/product/detail/${item.id}`}>编辑</Link>
+            </Button>
+            <Popconfirm title={`是否要${item.status === 1 ? '下架' : '上架'}该商品？`} onConfirm={() => this.changeStatus(item)}>
+              <Button type="link" >{item.status === 1 ? '下架' : '上架'}</Button>
+            </Popconfirm>
+            {/* <Popconfirm title="是否要删除？删除后不可恢复。" onConfirm={() => this.deleteUser(item)}>
+              <Button type="link" danger>删除</Button>
+            </Popconfirm> */}
+          </>
+        }
       }
     ];
 
 
     return (
-      <Card bordered={false}>
-        <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
+      <Card bordered={false} title="商品列表">
+        {formLoad && <Form className="body-form df-form"
+          ref={this.formRef}
+          onFinish={this.onFinish}
+          initialValues={queryForm}
+        >
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
-              <Form.Item name="q_username" label="用户名" >
-                <Input text='请输入用户名' />
+              <Form.Item name="q_id" label="商品ID" >
+                <Input text='请输入商品ID' />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
-              <Form.Item name="q_nickname" label="昵称" >
-                <Input text='请输入昵称' />
-              </Form.Item>
-            </Col>
-            <Col {...COL_CONFIG}>
-              <Form.Item name="q_role" label="权限" >
-                <Select data={[
-                  {label:'店长',value:1},
-                  {label:'游客',value:2}
-                ]}/>
+              <Form.Item name="q_title" label="商品标题" >
+                <Input text='请输入商品标题' />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
-                <Select data={[
-                  {label:'正常',value:1},
-                  {label:'冻结',value:0}
-                ]}/>
+                <Select data={PRODUCT_STATUS} />
               </Form.Item>
             </Col>
-            <Col {...COL_CONFIG} offset={18}>
-              <Form.Item className="df ai-c jc-fe">
-                <Button htmlType="submit" type="primary">搜索</Button>
-                <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
-              </Form.Item>
-            </Col>
+            <div className="search-btns">
+              <Button className="add-btn" type="primary">
+                <Link to='/product/detail/add'>添加</Link>
+              </Button>
+              <Button htmlType="submit" type="primary">搜索</Button>
+              <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+            </div>
           </Row>
-        </Form>
+        </Form>}
         <Table
           className="body-table"
           bordered
           columns={columns}
-          dataSource={userList}
-          rowKey={record => record.uid}
+          dataSource={productList}
+          rowKey={record => record.id}
           pagination={this.showPagination(pagination)}
           onChange={this.changeTable}
         >

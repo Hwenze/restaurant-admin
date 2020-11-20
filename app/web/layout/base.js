@@ -15,7 +15,7 @@ export default class BaseComponent extends Component {
 
   // 返回上一层路由
   backUrl = () => {
-    const { loacation = {} } = this.props;
+    const { location = {} } = this.props;
     if (window.history && window.history.length > 2) {
       // 跳回上次
     } else {
@@ -30,7 +30,6 @@ export default class BaseComponent extends Component {
   // 将对象参数push到路由
   pushUrlQuery(params) {
     params = params || {};
-    console.log('params', this.props);
     const { history, location: { pathname, query } } = this.props;
     const newQuery = {};
     
@@ -45,8 +44,6 @@ export default class BaseComponent extends Component {
         newQuery[key] = params[key];
       }
     })
-
-    console.log(newQuery);
 
     const search = Object.keys(newQuery).length === 0 ? '' : `?${queryString.stringify(newQuery)}`;
     history.replace({ pathname, search });

@@ -115,3 +115,28 @@ export function mapValue(arr, target = '', format={}) {
     }
     return resultLabel;
 }
+
+
+/**
+ * 解析size大小 KB,MB,GB
+ */
+export function releaseSize(limit) {
+    var size = '';
+    if (limit < 0.8 * 1024) { //如果小于0.8KB转化成B
+      size = limit.toFixed(2) + 'B';
+    } else if (limit < 0.8 * 1024 * 1024) {//如果小于0.8MB转化成KB
+      size = (limit / 1024).toFixed(2) + 'KB';
+    } else if (limit < 0.8 * 1024 * 1024 * 1024) { //如果小于0.8GB转化成MB
+      size = (limit / (1024 * 1024)).toFixed(2) + 'MB';
+    } else { //其他转化成GB
+      size = (limit / (1024 * 1024 * 1024)).toFixed(2) + 'GB';
+    }
+  
+    var sizestr = size + '';
+    var len = sizestr.indexOf('\.');
+    var dec = sizestr.substr(len + 1, 2);
+    if (dec == '00') {//当小数点后为00时 去掉小数部分
+      return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
+    }
+    return sizestr;
+  }

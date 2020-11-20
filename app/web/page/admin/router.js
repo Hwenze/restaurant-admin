@@ -33,7 +33,7 @@ let routeConfig = {
   },
   // 商品详情
   '/product/detail': {
-    path: ['/product/detail'],
+    path: ['/product/detail/add', '/product/detail/:id'],
     component: () => import('~web/page/admin/product/detail')
   },
   // 商品分类

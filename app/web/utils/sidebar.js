@@ -20,11 +20,6 @@ export default [
         title:'会员列表',
         icon:'',
       },
-      {
-        path:'/member/detail',
-        title:'会员详情',
-        icon:'',
-      }
     ]
   },
   {
@@ -38,11 +33,6 @@ export default [
         title:'订单列表',
         icon:'',
       },
-      {
-        path:'/order/detail',
-        title:'订单详情',
-        icon:'',
-      }
     ]
   },
   {
@@ -54,11 +44,6 @@ export default [
       {
         path:'/product/list',
         title:'商品列表',
-        icon:'',
-      },
-      {
-        path:'/product/detail',
-        title:'商品详情',
         icon:'',
       },
       {
