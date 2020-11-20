@@ -83,6 +83,20 @@ export default class CategoryList extends BaseComponent {
     }
   }
 
+
+  // 添加用户
+  add = () => {
+    this.setState({
+      visible: true,
+      currentData: {
+        id: null,
+        name: '',
+        image: '',
+        desc: undefined
+      }
+    })
+  }
+
   // 重新加载
   reload() {
     const { location } = this.props;
