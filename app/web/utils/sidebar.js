@@ -4,6 +4,7 @@ import {
   TeamOutlined,
   DesktopOutlined,
   BarChartOutlined,
+  GiftOutlined,
   AppstoreAddOutlined
 } from '@ant-design/icons';
 import React from 'react';
@@ -85,6 +86,19 @@ export default [
       {
         path:'/report/finance',
         title:'报表人员',
+        icon:'',
+      },
+    ]
+  },
+  {
+    path:'/activity',
+    title:'活动模块',
+    icon:<GiftOutlined />,
+    redirect:'/activity/real-time-info',
+    children:[
+      {
+        path:'/activity/real-time-info',
+        title:'活动资讯',
         icon:'',
       },
     ]

@@ -1,4 +1,3 @@
-
 import axios from '~web/utils/axios';
 
 export function getAgreement() {
@@ -6,6 +5,5 @@ export function getAgreement() {
 }
 
 export function setAgreement(agreement) {
-    console.log(agreement)
     return axios.post('/api/setAgreement', agreement);
 }
