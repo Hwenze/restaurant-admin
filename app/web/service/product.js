@@ -13,7 +13,7 @@ export const productService = {
     },
     // 保存商品
     saveProduct(params) {
-        return axios.post('/product/saveProduct', params)
+        return axios.post('/product/createOrUpdateProduct', params)
     },
     // 上下架商品
     changeProductStatus(id) {
@@ -29,5 +29,9 @@ export const categoryService = {
     // 上下架分类
     changeCategoryStatus(id) {
         return axios.post('/product/changeCategoryStatus', { id });
+    },
+    // 上下架分类
+    saveCategory(params) {
+        return axios.post('/product/createOrUpdateCategory', params);
     }
 }

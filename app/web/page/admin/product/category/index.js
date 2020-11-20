@@ -4,6 +4,7 @@ import { Card, Table, Form, Row, Col, Button, Popconfirm, message } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
 import { gerUrlQuery, mapValue } from '~web/utils';
+import Item from './item';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG, PRODUCT_STATUS } from '~web/utils/constant';
 import { categoryService } from '~web/service/product';
@@ -129,9 +130,7 @@ export default class CategoryList extends BaseComponent {
         width: 160,
         render: (item) => {
           return <>
-            <Button type="link" >
-              <Link to={`/product/detail/${item.id}`}>编辑</Link>
-            </Button>
+            <Button type="link" onClick={() => this.setState({ visible: true, currentData: item })}>编辑</Button>
             <Popconfirm title={`是否要${item.status === 1 ? '下架' : '上架'}该分类？`} onConfirm={() => this.changeStatus(item)}>
               <Button type="link" >{item.status === 1 ? '下架' : '上架'}</Button>
             </Popconfirm>
@@ -168,14 +167,17 @@ export default class CategoryList extends BaseComponent {
               </Form.Item>
             </Col>
             <div className="search-btns">
-              <Button className="add-btn" type="primary">
-                <Link to='/product/detail/add'>添加</Link>
-              </Button>
+              <Button className="add-btn" type="primary" onClick={this.add}>添加</Button>
               <Button htmlType="submit" type="primary">搜索</Button>
               <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
             </div>
           </Row>
         </Form>}
+        {formLoad && <Item
+          visible={visible}
+          onClose={this.modalClose}
+          itemData={currentData}
+        />}
         <Table
           className="body-table"
           bordered
