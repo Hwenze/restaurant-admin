@@ -3,13 +3,14 @@ import BaseComponent from '~web/layout/base';
 import { Card, Table, Form, Row, Col, Button } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
-import { gerUrlQuery } from '~web/utils';
+import { gerUrlQuery, getTime, mapValue } from '~web/utils';
 import { observer, inject } from 'mobx-react';
-import { ROW_CONFIG, COL_CONFIG } from '~web/utils/constant';
+import { ROW_CONFIG, COL_CONFIG, ORDER_STATUS } from '~web/utils/constant';
+import { Link } from 'react-router-dom';
 
 @inject(('store'))
 @observer
-export default class UserList extends BaseComponent {
+export default class OrderList extends BaseComponent {
 
   formRef = React.createRef();
   constructor(props) {
@@ -27,11 +28,11 @@ export default class UserList extends BaseComponent {
 
   loadData(params) {
     // 获取基本信息
-    const { store: { userStore } } = this.props;
+    const { store: { orderStore } } = this.props;
     this.setState({
       queryForm: params
     })
-    userStore.getUserList(params).then(res => {
+    orderStore.getOrderList(params).then(res => {
       console.log('res', res);
     })
 
@@ -49,23 +50,60 @@ export default class UserList extends BaseComponent {
   }
 
   render() {
-    const { store: { userStore }, form } = this.props;
+    const { store: { orderStore }, form } = this.props;
     const { queryForm } = this.state;
-    const { userList = [], pagination = {} } = userStore.state;
+    const { orderList = [], pagination = {} } = orderStore.state;
     const columns = [
       {
-        title: 'ID',
-        dataIndex: 'uid',
+        title: '订单ID',
+        dataIndex: 'order_id',
         align: 'center',
       },
       {
-        title: '用户名称',
-        dataIndex: 'nickname',
+        title: '就餐会员',
+        dataIndex: 'member_id',
+        align: 'center',
+        render: (v, item) => <span>
+          [{v}] {item.nickname}
+        </span>
+      },
+      {
+        title: '就餐人数',
+        dataIndex: 'people_num',
+        align: 'center',
+      },
+      {
+        title: '餐桌号',
+        dataIndex: 'table_num',
+        align: 'center',
+      },
+      {
+        title: '下单时间',
+        dataIndex: 'create_time',
+        align: 'center',
+        render: (val) => getTime(val)
+      },
+      {
+        title: '订单状态',
+        dataIndex: 'status',
+        align: 'center',
+        render: (val) => mapValue(ORDER_STATUS, val)
+      },
+      {
+        title: '消费金额',
+        dataIndex: 'total_price',
         align: 'center',
       },
       {
         title: '操作',
         align: 'center',
+        render: (item) => {
+          return <>
+            <Button type="link" >
+              <Link to={`/order/detail/${item.order_id}`}>查看</Link>
+            </Button>
+          </>
+        }
       }
     ];
 
@@ -75,45 +113,38 @@ export default class UserList extends BaseComponent {
         <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
-              <Form.Item name="q_username" label="用户名" >
-                <Input text='请输入用户名' />
+              <Form.Item name="q_orderId" label="订单ID" >
+                <Input text='请输入订单ID' />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
-              <Form.Item name="q_nickname" label="昵称" >
-                <Input text='请输入昵称' />
-              </Form.Item>
-            </Col>
-            <Col {...COL_CONFIG}>
-              <Form.Item name="q_role" label="权限" >
-                <Select data={[
-                  {label:'店长',value:1},
-                  {label:'游客',value:2}
-                ]}/>
+              <Form.Item name="q_memberId" label="用户ID" >
+                <Input text='请输入用户ID' />
               </Form.Item>
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
                 <Select data={[
-                  {label:'正常',value:1},
-                  {label:'冻结',value:0}
-                ]}/>
-              </Form.Item>
-            </Col>
-            <Col {...COL_CONFIG} offset={18}>
-              <Form.Item className="df ai-c jc-fe">
-                <Button htmlType="submit" type="primary">搜索</Button>
-                <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+                  { label: '正常', value: 1 },
+                  { label: '冻结', value: 0 }
+                ]} />
               </Form.Item>
             </Col>
           </Row>
+          <div className="search-btns">
+            <Button className="add-btn" type="primary">
+              <Link to='/product/detail/add'>添加</Link>
+            </Button>
+            <Button htmlType="submit" type="primary">搜索</Button>
+            <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
+          </div>
         </Form>
         <Table
           className="body-table"
           bordered
           columns={columns}
-          dataSource={userList}
-          rowKey={record => record.uid}
+          dataSource={orderList}
+          rowKey={record => record.id}
           pagination={this.showPagination(pagination)}
           onChange={this.changeTable}
         >

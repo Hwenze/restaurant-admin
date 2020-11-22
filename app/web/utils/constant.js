@@ -47,6 +47,29 @@ export const PRODUCT_STATUS = [
   }
 ]
 
+// 订单状态
+export const ORDER_STATUS = [
+  {
+    label:'待付款',
+    value:0,
+  },
+  {
+    label:'已取消',
+    value:1,
+  },
+  {
+    label:'已完成',
+    value:2
+  },
+]
+
+// 订单状态
+export const ORDER_STATUS_TAG = {
+  '0':'warning',
+  '1':'error',
+  '2':'success'
+}
+
 // 上传类型
 export const FILE_TYPE = {
   'IMAGE':'IMAGE',

@@ -96,7 +96,7 @@ export default class UserList extends BaseComponent {
           initialValues={productInfo}
           onFinish={this.onFinish}>
           <Form.Item label="商品图片" name="banner" rules={[{ required: true, message: '商品图片不能为空' }]}>
-            <Upload />
+            <Upload multiple={true} />
           </Form.Item>
           <Form.Item label="商品标题" name="title" rules={[{ required: true, message: '商品标题不能为空' }]}>
             <Input text="请输入商品标题" />

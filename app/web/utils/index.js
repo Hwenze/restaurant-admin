@@ -1,4 +1,5 @@
 import queryString from 'querystring';
+import moment from 'moment';
 
 export const jsonParse = (jsonString) => {
     let json;
@@ -89,17 +90,17 @@ export function filterIllegal(value, isTrim) {
 // 节流函数
 export function throttle(fn, delay) {
     let timer = null;
-    return function() {
+    return function () {
         const context = this, args = arguments;
         clearTimeout(timer);
-        timer = setTimeout(function(){
+        timer = setTimeout(function () {
             fn.apply(context, args);
         }, delay);
     };
 }
 
 // 根据map的value返回label
-export function mapValue(arr, target = '', format={}) {
+export function mapValue(arr, target = '', format = {}) {
     const { label = 'label', value = 'value' } = format;
     if (!Array.isArray(arr)) {
         return ''
@@ -110,7 +111,7 @@ export function mapValue(arr, target = '', format={}) {
     let resultLabel = '';
     for (const item of arr) {
         if (item[value] === target) {
-           resultLabel = item[label];
+            resultLabel = item[label];
         }
     }
     return resultLabel;
@@ -123,20 +124,24 @@ export function mapValue(arr, target = '', format={}) {
 export function releaseSize(limit) {
     var size = '';
     if (limit < 0.8 * 1024) { //如果小于0.8KB转化成B
-      size = limit.toFixed(2) + 'B';
+        size = limit.toFixed(2) + 'B';
     } else if (limit < 0.8 * 1024 * 1024) {//如果小于0.8MB转化成KB
-      size = (limit / 1024).toFixed(2) + 'KB';
+        size = (limit / 1024).toFixed(2) + 'KB';
     } else if (limit < 0.8 * 1024 * 1024 * 1024) { //如果小于0.8GB转化成MB
-      size = (limit / (1024 * 1024)).toFixed(2) + 'MB';
+        size = (limit / (1024 * 1024)).toFixed(2) + 'MB';
     } else { //其他转化成GB
-      size = (limit / (1024 * 1024 * 1024)).toFixed(2) + 'GB';
+        size = (limit / (1024 * 1024 * 1024)).toFixed(2) + 'GB';
     }
-  
+
     var sizestr = size + '';
     var len = sizestr.indexOf('\.');
     var dec = sizestr.substr(len + 1, 2);
     if (dec == '00') {//当小数点后为00时 去掉小数部分
-      return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
+        return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
     }
     return sizestr;
-  }
+}
+
+export function getTime(val, format = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(val).format(format);
+}
