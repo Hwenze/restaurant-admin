@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { mapValue } from '~web/utils';
 import { getHomeRotation, changeStatus } from './service';
 import { ENABLE_STATUS } from '~web/utils/constant';
+import { pvImage } from '~web/component/pv';
 
 export default class homeRotation extends BaseComponent {
 
@@ -52,10 +53,12 @@ export default class homeRotation extends BaseComponent {
         title: '图片',
         dataIndex: 'picture',
         align: 'center',
-        render: (record) => <img src={record} width="100px" />
+        render: (val) => (
+          <img className="table-item-image" src={val} onClick={() => pvImage(val)} />
+        )
       },
       {
-        title: '权限状态',
+        title: '状态',
         dataIndex: 'status',
         align: 'center',
         render: (val) => mapValue(ENABLE_STATUS, val)

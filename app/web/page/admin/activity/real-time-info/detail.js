@@ -3,6 +3,7 @@ import BaseComponent from "~web/layout/base";
 import { Card, Form, Button, DatePicker, message } from "antd";
 import Input from "~web/component/Input";
 import { observer, inject } from "mobx-react";
+import Upload from '~web/component/Upload';
 // 引入编辑器组件
 import BraftEditor from "braft-editor";
 // 引入编辑器样式
@@ -77,8 +78,8 @@ export default class InfoDetails extends BaseComponent {
   // 确认保存
   onFinish = (value) => {
     let data = {
+      picture: value.picture,
       title: value.title,
-      introduce: value.introduce,
       star_time: value.picker[0].format('YYYY-MM-DD'),
       end_time: value.picker[1].format('YYYY-MM-DD'),
       content: this.state.editorState.toHTML()
@@ -109,18 +110,18 @@ export default class InfoDetails extends BaseComponent {
   render() {
     const { editorState, roleInfo, formLoad } = this.state;
     return (
-      <Card bordered={false} title={this.roleId ? '编辑' : '新增' + "活动资讯"}>
+      <Card bordered={false} title={this.roleId ? '编辑活动资讯' : '新增活动资讯'}>
         {formLoad && <Form
           className="body-form df-form"
           ref={this.formRef}
           onFinish={this.onFinish}
           initialValues={{ ...roleInfo }}
         >
+          <Form.Item label="轮播图片" name="picture" rules={[{ required: true, message: '活动图片不能为空' }]}>
+            <Upload />
+          </Form.Item>
           <Form.Item name="title" label="活动标题" rules={[{ required: true, message: '活动标题不能为空', max: 25 }]}>
             <Input text="请输入活动标题" />
-          </Form.Item>
-          <Form.Item name="introduce" label="活动介绍" rules={[{ required: true, message: '活动介绍不能为空', max: 100 }]}>
-            <Input text="请输入活动介绍" />
           </Form.Item>
           <Form.Item name="picker" label="活动时间" rules={[{ type: 'array', required: true, message: '活动时间不能为空' }]}>
             <RangePicker format="YYYY-MM-DD" />
