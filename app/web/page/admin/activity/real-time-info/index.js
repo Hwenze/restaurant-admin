@@ -3,10 +3,11 @@ import BaseComponent from '~web/layout/base';
 import { Card, Table, Form, Row, Col, Button, DatePicker, Popconfirm, message } from 'antd';
 import { Link } from 'react-router-dom';
 import Input from '~web/component/Input';
-import { gerUrlQuery } from '~web/utils';
+import { gerUrlQuery, getTime } from '~web/utils';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG, COMMON_STATUS } from '~web/utils/constant';
 import { getRealTimeInfo, deleteRealTimeInfo } from './service';
+import { pvImage } from '~web/component/pv';
 const { RangePicker } = DatePicker;
 
 @inject(('store'))
@@ -110,24 +111,29 @@ export default class realRimeInfo extends BaseComponent {
         const { dataList = [], pagination = {}, queryForm, formLoad } = this.state;
         const columns = [
             {
+                title: '图片',
+                dataIndex: 'picture',
+                align: 'center',
+                render: (val) => (
+                  <img className="table-item-image" src={val} onClick={() => pvImage(val)} />
+                )
+              },
+            {
                 title: '标题',
                 dataIndex: 'title',
-                align: 'center',
-            },
-            {
-                title: '介绍',
-                dataIndex: 'introduce',
                 align: 'center',
             },
             {
                 title: '开始时间',
                 dataIndex: 'star_time',
                 align: 'center',
+                render: (val) => getTime(val, 'YYYY-MM-DD')
             },
             {
                 title: '结束时间',
                 dataIndex: 'end_time',
                 align: 'center',
+                render: (val) => getTime(val, 'YYYY-MM-DD')
             },
             {
                 title: '操作',
