@@ -63,7 +63,7 @@ export default class OrderDetail extends BaseComponent {
     const columns = [
       {
         title: '商品ID',
-        dataIndex: 'id',
+        dataIndex: 'product_id',
         align: 'center',
       },
       {
@@ -171,7 +171,7 @@ export default class OrderDetail extends BaseComponent {
                 <div className="result-list">
                   <div className="result-item">
                     <span className="result-item-label">菜品消费：</span>
-                    <span className="result-item-content">{orderInfo.total_price - orderInfo.tea_price}</span>
+                    <span className="result-item-content">¥ {orderInfo.product_price}</span>
                   </div>
                   <div className="result-item">
                     <span className="result-item-label">茶位费：</span>
