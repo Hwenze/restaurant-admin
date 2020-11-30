@@ -22,9 +22,9 @@ module.exports = app => {
       const baseRoutes = ctx.app.config.baseRoutes || [];
       await ctx.renderClient('admin.js', {
         // menuList: baseRoutes.concat(menuList),
-        menuList: menuList,
-        userinfo: userinfo,
-        token: token
+        menuList,
+        userinfo,
+        token
       });
     }
 

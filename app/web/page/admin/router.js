@@ -66,6 +66,11 @@ let routeConfig = {
     path: ['/operate/home'],
     component: () => import('~web/page/admin/operate/home')
   },
+  // 运营模块-店铺配置
+  '/operate/shop': {
+    path: ['/operate/shop'],
+    component: () => import('~web/page/admin/operate/shop')
+  },
   // 后台人员列表
   '/operate/user': {
     path: ['/operate/user'],

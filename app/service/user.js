@@ -7,6 +7,7 @@ module.exports = app => {
         async fetch(method, api, data) {
 
             const request = axios.create({
+                // baseURL: 'http://scg-admin-service.fhk255.cn',
                 baseURL: 'http://127.0.0.1:8080',
                 withCredentials: true,
                 credentials: 'include'

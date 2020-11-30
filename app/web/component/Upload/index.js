@@ -46,7 +46,6 @@ export default class UploadImage extends Component {
     if (!Array.isArray(_fileList)) {
       _fileList = [_fileList]
     }
-    console.log('fi', _fileList);
     if (_fileList && _fileList.length) {
       _fileList.map(item => {
         if (!item) return;
@@ -56,12 +55,14 @@ export default class UploadImage extends Component {
             uid: item,
             status: 'done',
             url: item,
+            thumbUrl: item,
           })
         } else {
           fileList.push({
             uid: item.url,
             status: 'done',
             url: item.url,
+            thumbUrl: item.url,
           })
         }
       })
@@ -85,6 +86,7 @@ export default class UploadImage extends Component {
   onChange = async ({ file, fileList }) => {
     const { onChange, size, onComplete, multiple, maxCount, fileType, isReUpload } = this.props;
     // 限制图片大小
+    const _fileList = [];
     const isPass = file.size ? file.size / 1024 < size : true;
     if (size && !isPass) {
       message.warn(`文件大小不能大于${releaseSize(size * 1024)}~`);
@@ -103,36 +105,38 @@ export default class UploadImage extends Component {
       if (file.status === 'error') {
         message.error('上传失败');
       }
-      else {
-        if (!multiple) {
-          if (file.response && file.response.code === 200) {
-            onChange && onChange(file.response.data.url);
-          } else {
-            onChange && onChange(file.url);
+      if (file.status === 'done') {
+        fileList = fileList.map(_file => {
+          _fileList.push(_file.url?_file.url:file.response.data.url);
+          return {
+            uid: file.uid === _file.uid ? file.response.data.url : _file.uid,
+            status: 'done',
+            url: file.uid === _file.uid ? file.response.data.url : _file.url,
+            thumbUrl: file.uid === _file.uid ? file.response.data.url : _file.thumbUrl
           }
+        })
+        if (!multiple) {
+          onChange && onChange(file.response.data.url);
         } else {
-          onChange && onChange(fileList);
+          onChange && onChange(_fileList);
         }
         onComplete && onComplete(file, fileList);
       }
     }
-
-
     this.setState({ fileList });
   }
 
   onRemove = file => {
     const { multiple, onRemove, onChange } = this.props;
     let { fileList } = this.state;
-
     fileList = fileList.filter(item => item.url !== file.url);
-
+    const _fileList = fileList.map(item=>item.url);
     if (!multiple) {
       onChange && onChange(fileList && fileList.length ? fileList[0].url : '');
     } else {
-      onChange && onChange(fileList);
+      onChange && onChange(_fileList);
     }
-    onRemove && onRemove(fileList);
+    onRemove && onRemove(_fileList);
 
     this.setState({ fileList });
   }
@@ -156,7 +160,7 @@ export default class UploadImage extends Component {
     const props = {
       multiple,
       fileList: fileList,
-      action: 'http://127.0.0.1:8080/api/uploadImage',
+      action: 'http://scg-admin-service.fhk255.cn/api/uploadImage',
       ...restProps,
       onChange: this.onChange,
       onRemove: this.onRemove,

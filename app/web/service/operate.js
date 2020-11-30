@@ -43,3 +43,14 @@ export const roleService = {
         return axios.get('/operate/getRoleInfo', { id: roleId });
     }
 }
+
+export const shopService = {
+    // 获取权限列表
+    getShopInfo() {
+        return axios.get('/operate/getShopInfo');
+    },
+    // 启用禁用权限
+    updateShopInfo(params) {
+        return axios.post('/operate/updateShopInfo', params);
+    },
+}

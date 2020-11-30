@@ -7,6 +7,7 @@ import Upload from '~web/component/Upload';
 import { observer, inject } from 'mobx-react';
 import { productService, categoryService } from '~web/service/product';
 import './index.less';
+import { getTime } from '~web/utils';
 
 @inject(('store'))
 @observer
@@ -96,7 +97,7 @@ export default class UserList extends BaseComponent {
           initialValues={productInfo}
           onFinish={this.onFinish}>
           <Form.Item label="商品图片" name="banner" rules={[{ required: true, message: '商品图片不能为空' }]}>
-            <Upload multiple={true} />
+            <Upload/>
           </Form.Item>
           <Form.Item label="商品标题" name="title" rules={[{ required: true, message: '商品标题不能为空' }]}>
             <Input text="请输入商品标题" />
@@ -115,7 +116,7 @@ export default class UserList extends BaseComponent {
             ></Select>
           </Form.Item>
           {productInfo.create_time && <Form.Item label="创建时间">
-            <Tag>{productInfo.create_time}</Tag>
+            <Tag>{getTime(productInfo.create_time)}</Tag>
           </Form.Item>}
           <Form.Item >
             <Button type="primary" htmlType="submit">保存</Button>

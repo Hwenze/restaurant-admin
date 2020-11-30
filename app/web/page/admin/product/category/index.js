@@ -3,7 +3,7 @@ import BaseComponent from '~web/layout/base';
 import { Card, Table, Form, Row, Col, Button, Popconfirm, message } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
-import { gerUrlQuery, mapValue } from '~web/utils';
+import { gerUrlQuery, mapValue, getTime } from '~web/utils';
 import Item from './item';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG, PRODUCT_STATUS } from '~web/utils/constant';
@@ -137,6 +137,7 @@ export default class CategoryList extends BaseComponent {
         title: '创建时间',
         dataIndex: 'create_time',
         align: 'center',
+        render: (val) => getTime(val)
       },
       {
         title: '操作',

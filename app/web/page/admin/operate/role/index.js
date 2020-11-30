@@ -3,7 +3,7 @@ import BaseComponent from '~web/layout/base';
 import { Card, Table, Form, Row, Col, Button, Popconfirm, message } from 'antd';
 import Input from '~web/component/Input';
 import Select from '~web/component/Select';
-import { gerUrlQuery, mapValue } from '~web/utils';
+import { gerUrlQuery, mapValue, getTime } from '~web/utils';
 import { observer, inject } from 'mobx-react';
 import { ROW_CONFIG, COL_CONFIG, ENABLE_STATUS } from '~web/utils/constant';
 // import UserItem from './item';
@@ -122,6 +122,7 @@ export default class UserRolePage extends BaseComponent {
         title: '创建时间',
         dataIndex: 'create_time',
         align: 'center',
+        render: (val) => getTime(val),
       },
       {
         title: '操作',
@@ -129,7 +130,7 @@ export default class UserRolePage extends BaseComponent {
         width: 250,
         render: (item) => {
           return <>
-            <Link style={{padding:'4px 15px'}} to={`/operate/role/${item.id}`} type="link" onClick={() => this.setState({ visible: true, currentData: item })}>编辑</Link>
+            <Link style={{ padding: '4px 15px' }} to={`/operate/role/${item.id}`} type="link" onClick={() => this.setState({ visible: true, currentData: item })}>编辑</Link>
             <Popconfirm title={`是否要${item.status === 1 ? '禁用' : '启用'}该权限？`} onConfirm={() => this.changeStatus(item)}>
               <Button type="link" >{item.status === 1 ? '禁用' : '启用'}</Button>
             </Popconfirm>
@@ -149,7 +150,7 @@ export default class UserRolePage extends BaseComponent {
           onFinish={this.onFinish}
           initialValues={{
             q_name: queryForm.q_name,
-            q_status:queryForm.q_status
+            q_status: queryForm.q_status
           }}
         >
           <Row gutter={ROW_CONFIG}>

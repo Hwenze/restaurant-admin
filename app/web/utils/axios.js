@@ -5,8 +5,8 @@ import { TOKEN_KEY } from './constant';
 
 // 创建axios
 let request = axios.create({
+  // baseURL: 'http://scg-admin-service.fhk255.cn',
   baseURL: 'http://127.0.0.1:8080',
-  // baseURL: 'http://172.18.3.51:3000',
   // baseURL: 'http://project.fhk255.cn',
   withCredentials: true,
   credentials: 'include'

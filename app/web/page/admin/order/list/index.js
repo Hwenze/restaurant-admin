@@ -30,11 +30,10 @@ export default class OrderList extends BaseComponent {
     // 获取基本信息
     const { store: { orderStore } } = this.props;
     this.setState({
-      queryForm: params
+      queryForm: params,
+      formLoad:true,
     })
-    orderStore.getOrderList(params).then(res => {
-      console.log('res', res);
-    })
+    orderStore.getOrderList(params);
 
   }
   // 确认
@@ -51,7 +50,7 @@ export default class OrderList extends BaseComponent {
 
   render() {
     const { store: { orderStore }, form } = this.props;
-    const { queryForm } = this.state;
+    const { queryForm, formLoad } = this.state;
     const { orderList = [], pagination = {} } = orderStore.state;
     const columns = [
       {
@@ -110,7 +109,7 @@ export default class OrderList extends BaseComponent {
 
     return (
       <Card bordered={false}>
-        <Form className="body-form df-form" ref={this.formRef} onFinish={this.onFinish}>
+        {formLoad && <Form className="body-form df-form" ref={this.formRef} initialValues={queryForm} onFinish={this.onFinish}>
           <Row gutter={ROW_CONFIG}>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_orderId" label="订单ID" >
@@ -124,10 +123,7 @@ export default class OrderList extends BaseComponent {
             </Col>
             <Col {...COL_CONFIG}>
               <Form.Item name="q_status" label="状态" >
-                <Select data={[
-                  { label: '正常', value: 1 },
-                  { label: '冻结', value: 0 }
-                ]} />
+                <Select data={ORDER_STATUS} />
               </Form.Item>
             </Col>
           </Row>
@@ -138,7 +134,7 @@ export default class OrderList extends BaseComponent {
             <Button htmlType="submit" type="primary">搜索</Button>
             <Button style={{ marginLeft: '12px' }} onClick={this.onReset}>重置</Button>
           </div>
-        </Form>
+        </Form>}
         <Table
           className="body-table"
           bordered

@@ -11,10 +11,10 @@ const { Sider, Content } = Layout;
 import { withRouter } from 'react-router-dom';
 import zhCN from 'antd/es/locale/zh_CN';
 
+
 @inject(('store'))
 @observer
 class Root extends BaseComponent {
-
 
   componentDidMount() {
     const { store, userinfo = {}, menuList = [] } = this.props;

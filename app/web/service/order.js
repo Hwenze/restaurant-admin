@@ -11,4 +11,8 @@ export const orderService = {
     getOrderList(params) {
         return axios.get('/order/getOrderList', params);
     },
+    // 获取未完成的订单数量
+    getOrderStatusCount(){
+        return axios.get('/order/getOrderStatusCount');
+    }
 }

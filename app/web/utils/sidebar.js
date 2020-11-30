@@ -66,6 +66,11 @@ export default [
         icon:'',
       },
       {
+        path:'/operate/shop',
+        title:'店铺配置',
+        icon:'',
+      },
+      {
         path:'/operate/user',
         title:'运营人员',
         icon:'',

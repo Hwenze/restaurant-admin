@@ -2,16 +2,12 @@ import React from 'react';
 import BaseComponent from '~web/layout/base';
 import { Card, Form, Typography, Tag, Badge, Avatar, Button, message, Table } from 'antd';
 const { Text } = Typography;
-import Input from '~web/component/Input';
-import Select from '~web/component/Select';
-import Upload from '~web/component/Upload';
 import { observer, inject } from 'mobx-react';
 import { gerUrlQuery, getTime, mapValue } from '~web/utils';
 import { ROW_CONFIG, ORDER_STATUS_TAG, ORDER_STATUS } from '~web/utils/constant';
 import { orderService, categoryService } from '~web/service/order';
 import { pvImage } from '~web/component/pv';
 import './index.less';
-import { get } from 'mobx';
 
 
 @inject(('store'))
